@@ -1,0 +1,349 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{33B5F7BD-76E7-43E7-90A5-0037D19FB7B5}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>liblonely</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>TALES_ENABLE_LIBPNG;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>TALES_ENABLE_LIBPNG;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\editor\LonelyControlViewManager.h" />
+    <ClInclude Include="include\editor\LonelyEditor.h" />
+    <ClInclude Include="include\editor\LonelyLevelEditor.h" />
+    <ClInclude Include="include\editor\LonelyLevelView.h" />
+    <ClInclude Include="include\editor\LonelyLevelViewManager.h" />
+    <ClInclude Include="include\editor\LonelyMetatileCache.h" />
+    <ClInclude Include="include\editor\LonelyMetatileCacheSet.h" />
+    <ClInclude Include="include\exception\ColorOutOfRangeException.h" />
+    <ClInclude Include="include\exception\FileException.h" />
+    <ClInclude Include="include\exception\FileNotFoundException.h" />
+    <ClInclude Include="include\exception\InvalidFileException.h" />
+    <ClInclude Include="include\exception\InvalidLoadDataException.h" />
+    <ClInclude Include="include\exception\NotEnoughSpaceException.h" />
+    <ClInclude Include="include\exception\OutOfRangeIndexException.h" />
+    <ClInclude Include="include\exception\PoppedEmptyStackException.h" />
+    <ClInclude Include="include\exception\TalesException.h" />
+    <ClInclude Include="include\exception\TGenericException.h" />
+    <ClInclude Include="include\exception\TmapKeyNotFoundException.h" />
+    <ClInclude Include="include\exception\UnrecognizedVersionException.h" />
+    <ClInclude Include="include\gamedata\LaylaArea.h" />
+    <ClInclude Include="include\gamedata\LaylaBoss.h" />
+    <ClInclude Include="include\gamedata\LaylaData.h" />
+    <ClInclude Include="include\gamedata\LaylaFullPalettePatch.h" />
+    <ClInclude Include="include\gamedata\LaylaGraphics.h" />
+    <ClInclude Include="include\gamedata\LaylaHacks.h" />
+    <ClInclude Include="include\gamedata\LaylaHpArray.h" />
+    <ClInclude Include="include\gamedata\LaylaLevel.h" />
+    <ClInclude Include="include\gamedata\LaylaLevelSet.h" />
+    <ClInclude Include="include\gamedata\LaylaMetatile.h" />
+    <ClInclude Include="include\gamedata\LaylaMetatileBehavior.h" />
+    <ClInclude Include="include\gamedata\LaylaMetatileSet.h" />
+    <ClInclude Include="include\gamedata\LaylaObjectPatternTable.h" />
+    <ClInclude Include="include\gamedata\LaylaObjectPatternToken.h" />
+    <ClInclude Include="include\gamedata\LaylaObjectScoreArray.h" />
+    <ClInclude Include="include\gamedata\LaylaObjectSets.h" />
+    <ClInclude Include="include\gamedata\LaylaOffsetFile.h" />
+    <ClInclude Include="include\gamedata\LaylaPalettePatch.h" />
+    <ClInclude Include="include\gamedata\LaylaPalettes.h" />
+    <ClInclude Include="include\gamedata\LaylaPattern.h" />
+    <ClInclude Include="include\gamedata\LaylaPatternDefinitionTable.h" />
+    <ClInclude Include="include\gamedata\LaylaPatternToken.h" />
+    <ClInclude Include="include\gamedata\LaylaStaticMetatiles.h" />
+    <ClInclude Include="include\gamedata\LaylaStaticMetatileSet.h" />
+    <ClInclude Include="include\gamedata\LaylaVulnerabilityArray.h" />
+    <ClInclude Include="include\gamedata\LaylaVulnerabilityFlag.h" />
+    <ClInclude Include="include\gamedata\LonelyLaylaMapping.h" />
+    <ClInclude Include="include\gamedata\LonelyLaylaMappings.h" />
+    <ClInclude Include="include\gamedata\LonelyLaylaObject.h" />
+    <ClInclude Include="include\gamegear\GGColor.h" />
+    <ClInclude Include="include\gamegear\GGFullTileSet.h" />
+    <ClInclude Include="include\gamegear\GGPalette.h" />
+    <ClInclude Include="include\gamegear\GGTile.h" />
+    <ClInclude Include="include\gamegear\GGTileSet.h" />
+    <ClInclude Include="include\gamegear\LoadedROM.h" />
+    <ClInclude Include="include\gamegear\TileReference.h" />
+    <ClInclude Include="include\gamegear\VirtualVDP.h" />
+    <ClInclude Include="include\gamegear\WritableROM.h" />
+    <ClInclude Include="include\libs\png.h" />
+    <ClInclude Include="include\libs\pngconf.h" />
+    <ClInclude Include="include\libs\pngdebug.h" />
+    <ClInclude Include="include\libs\pnginfo.h" />
+    <ClInclude Include="include\libs\pnglibconf.h" />
+    <ClInclude Include="include\libs\pngpriv.h" />
+    <ClInclude Include="include\libs\pngstruct.h" />
+    <ClInclude Include="include\nes\NesColor.h" />
+    <ClInclude Include="include\nes\NesColorData.h" />
+    <ClInclude Include="include\nes\NesPalette.h" />
+    <ClInclude Include="include\nes\NesPaletteQuad.h" />
+    <ClInclude Include="include\nes\NesPatternTable.h" />
+    <ClInclude Include="include\nes\NesRom.h" />
+    <ClInclude Include="include\nes\NesTile.h" />
+    <ClInclude Include="include\nes\UxRomBanking.h" />
+    <ClInclude Include="include\structs\AddressTableReader.h" />
+    <ClInclude Include="include\structs\BitmapGraphicSceneObject.h" />
+    <ClInclude Include="include\structs\Box.h" />
+    <ClInclude Include="include\structs\BoxGraphicSceneObject.h" />
+    <ClInclude Include="include\structs\ConstSizeVector.h" />
+    <ClInclude Include="include\structs\DataChunkID.h" />
+    <ClInclude Include="include\structs\DisplayAreaManager.h" />
+    <ClInclude Include="include\structs\FreeSpaceListing.h" />
+    <ClInclude Include="include\structs\FreeSpaceListPair.h" />
+    <ClInclude Include="include\structs\GenericGraphicSceneLayer.h" />
+    <ClInclude Include="include\structs\GenericGraphicSceneObject.h" />
+    <ClInclude Include="include\structs\Graphic.h" />
+    <ClInclude Include="include\structs\GraphicDependencyGroup.h" />
+    <ClInclude Include="include\structs\GraphicDependencyGroupEntry.h" />
+    <ClInclude Include="include\structs\GraphicIdentifier.h" />
+    <ClInclude Include="include\structs\GraphicSceneLayer.h" />
+    <ClInclude Include="include\structs\GridGraphicSceneLayer.h" />
+    <ClInclude Include="include\structs\IndexToAddressMap.h" />
+    <ClInclude Include="include\structs\InputEventData.h" />
+    <ClInclude Include="include\structs\KeyedAddressTableBuilder.h" />
+    <ClInclude Include="include\structs\KeyedTableBuilder.h" />
+    <ClInclude Include="include\structs\LayeredGraphicScene.h" />
+    <ClInclude Include="include\structs\LevelWidth.h" />
+    <ClInclude Include="include\structs\LoadHelper.h" />
+    <ClInclude Include="include\structs\PngConversion.h" />
+    <ClInclude Include="include\structs\RawFreeSpacePair.h" />
+    <ClInclude Include="include\structs\SaveHelper.h" />
+    <ClInclude Include="include\structs\Taddress.h" />
+    <ClInclude Include="include\structs\Tarray.h" />
+    <ClInclude Include="include\structs\Tbyte.h" />
+    <ClInclude Include="include\structs\Tcolor.h" />
+    <ClInclude Include="include\structs\Tmap.h" />
+    <ClInclude Include="include\structs\Tpair.h" />
+    <ClInclude Include="include\structs\TpointerArray.h" />
+    <ClInclude Include="include\structs\TpointerVector.h" />
+    <ClInclude Include="include\structs\TransModel.h" />
+    <ClInclude Include="include\structs\Tstring.h" />
+    <ClInclude Include="include\structs\Tvector.h" />
+    <ClInclude Include="include\structs\TwoDArray.h" />
+    <ClInclude Include="include\structs\TwoDByteArray.h" />
+    <ClInclude Include="include\structs\TwoKeyedAddress.h" />
+    <ClInclude Include="include\structs\TwoKeyedData.h" />
+    <ClInclude Include="include\structs\WrapScrollGraphic.h" />
+    <ClInclude Include="include\util\ArrayOps.h" />
+    <ClInclude Include="include\util\ByteConversion.h" />
+    <ClInclude Include="include\util\ByteSizes.h" />
+    <ClInclude Include="include\util\CoordinatePair.h" />
+    <ClInclude Include="include\util\DumbPointer.h" />
+    <ClInclude Include="include\util\EndiannessType.h" />
+    <ClInclude Include="include\util\FileManip.h" />
+    <ClInclude Include="include\util\GenericException.h" />
+    <ClInclude Include="include\util\IniFile.h" />
+    <ClInclude Include="include\util\MiscMath.h" />
+    <ClInclude Include="include\util\RLE8Command.h" />
+    <ClInclude Include="include\util\RLE8CommandCollection.h" />
+    <ClInclude Include="include\util\RLE8CommandType.h" />
+    <ClInclude Include="include\util\RLE8Compressor.h" />
+    <ClInclude Include="include\util\RLE8ValueCollection.h" />
+    <ClInclude Include="include\util\SignednessType.h" />
+    <ClInclude Include="include\util\StreamOps.h" />
+    <ClInclude Include="include\util\StringConversion.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\editor\LonelyControlViewManager.cpp" />
+    <ClCompile Include="src\editor\LonelyEditor.cpp" />
+    <ClCompile Include="src\editor\LonelyLevelEditor.cpp" />
+    <ClCompile Include="src\editor\LonelyLevelView.cpp" />
+    <ClCompile Include="src\editor\LonelyLevelViewManager.cpp" />
+    <ClCompile Include="src\editor\LonelyMetatileCache.cpp" />
+    <ClCompile Include="src\editor\LonelyMetatileCacheSet.cpp" />
+    <ClCompile Include="src\exception\ColorOutOfRangeException.cpp" />
+    <ClCompile Include="src\exception\FileException.cpp" />
+    <ClCompile Include="src\exception\FileNotFoundException.cpp" />
+    <ClCompile Include="src\exception\InvalidFileException.cpp" />
+    <ClCompile Include="src\exception\InvalidLoadDataException.cpp" />
+    <ClCompile Include="src\exception\NotEnoughSpaceException.cpp" />
+    <ClCompile Include="src\exception\OutOfRangeIndexException.cpp" />
+    <ClCompile Include="src\exception\PoppedEmptyStackException.cpp" />
+    <ClCompile Include="src\exception\TalesException.cpp" />
+    <ClCompile Include="src\exception\TGenericException.cpp" />
+    <ClCompile Include="src\exception\TmapKeyNotFoundException.cpp" />
+    <ClCompile Include="src\exception\UnrecognizedVersionException.cpp" />
+    <ClCompile Include="src\gamedata\LaylaArea.cpp" />
+    <ClCompile Include="src\gamedata\LaylaBoss.cpp" />
+    <ClCompile Include="src\gamedata\LaylaData.cpp" />
+    <ClCompile Include="src\gamedata\LaylaFullPalettePatch.cpp" />
+    <ClCompile Include="src\gamedata\LaylaGraphics.cpp" />
+    <ClCompile Include="src\gamedata\LaylaHacks.cpp" />
+    <ClCompile Include="src\gamedata\LaylaHpArray.cpp" />
+    <ClCompile Include="src\gamedata\LaylaLevel.cpp" />
+    <ClCompile Include="src\gamedata\LaylaLevelSet.cpp" />
+    <ClCompile Include="src\gamedata\LaylaMetatile.cpp" />
+    <ClCompile Include="src\gamedata\LaylaMetatileBehavior.cpp" />
+    <ClCompile Include="src\gamedata\LaylaMetatileSet.cpp" />
+    <ClCompile Include="src\gamedata\LaylaObjectPatternTable.cpp" />
+    <ClCompile Include="src\gamedata\LaylaObjectPatternToken.cpp" />
+    <ClCompile Include="src\gamedata\LaylaObjectScoreArray.cpp" />
+    <ClCompile Include="src\gamedata\LaylaObjectSets.cpp" />
+    <ClCompile Include="src\gamedata\LaylaOffsetFile.cpp" />
+    <ClCompile Include="src\gamedata\LaylaPalettePatch.cpp" />
+    <ClCompile Include="src\gamedata\LaylaPalettes.cpp" />
+    <ClCompile Include="src\gamedata\LaylaPattern.cpp" />
+    <ClCompile Include="src\gamedata\LaylaPatternDefinitionTable.cpp" />
+    <ClCompile Include="src\gamedata\LaylaPatternToken.cpp" />
+    <ClCompile Include="src\gamedata\LaylaStaticMetatiles.cpp" />
+    <ClCompile Include="src\gamedata\LaylaStaticMetatileSet.cpp" />
+    <ClCompile Include="src\gamedata\LaylaVulnerabilityArray.cpp" />
+    <ClCompile Include="src\gamedata\LaylaVulnerabilityFlag.cpp" />
+    <ClCompile Include="src\gamedata\LonelyLaylaMapping.cpp" />
+    <ClCompile Include="src\gamedata\LonelyLaylaMappings.cpp" />
+    <ClCompile Include="src\gamedata\LonelyLaylaObject.cpp" />
+    <ClCompile Include="src\gamegear\GGColor.cpp" />
+    <ClCompile Include="src\gamegear\GGFullTileSet.cpp" />
+    <ClCompile Include="src\gamegear\GGPalette.cpp" />
+    <ClCompile Include="src\gamegear\GGTile.cpp" />
+    <ClCompile Include="src\gamegear\GGTileSet.cpp" />
+    <ClCompile Include="src\gamegear\LoadedROM.cpp" />
+    <ClCompile Include="src\gamegear\TileReference.cpp" />
+    <ClCompile Include="src\gamegear\VirtualVDP.cpp" />
+    <ClCompile Include="src\gamegear\WritableROM.cpp" />
+    <ClCompile Include="src\libs\png.cpp" />
+    <ClCompile Include="src\libs\pngconf.cpp" />
+    <ClCompile Include="src\libs\pngdebug.cpp" />
+    <ClCompile Include="src\libs\pnginfo.cpp" />
+    <ClCompile Include="src\libs\pnglibconf.cpp" />
+    <ClCompile Include="src\libs\pngpriv.cpp" />
+    <ClCompile Include="src\libs\pngstruct.cpp" />
+    <ClCompile Include="src\nes\NesColor.cpp" />
+    <ClCompile Include="src\nes\NesColorData.cpp" />
+    <ClCompile Include="src\nes\NesPalette.cpp" />
+    <ClCompile Include="src\nes\NesPaletteQuad.cpp" />
+    <ClCompile Include="src\nes\NesPatternTable.cpp" />
+    <ClCompile Include="src\nes\NesRom.cpp" />
+    <ClCompile Include="src\nes\NesTile.cpp" />
+    <ClCompile Include="src\nes\UxRomBanking.cpp" />
+    <ClCompile Include="src\structs\AddressTableReader.cpp" />
+    <ClCompile Include="src\structs\BitmapGraphicSceneObject.cpp" />
+    <ClCompile Include="src\structs\Box.cpp" />
+    <ClCompile Include="src\structs\BoxGraphicSceneObject.cpp" />
+    <ClCompile Include="src\structs\ConstSizeVector.cpp" />
+    <ClCompile Include="src\structs\DataChunkID.cpp" />
+    <ClCompile Include="src\structs\DisplayAreaManager.cpp" />
+    <ClCompile Include="src\structs\FreeSpaceListing.cpp" />
+    <ClCompile Include="src\structs\FreeSpaceListPair.cpp" />
+    <ClCompile Include="src\structs\GenericGraphicSceneLayer.cpp" />
+    <ClCompile Include="src\structs\GenericGraphicSceneObject.cpp" />
+    <ClCompile Include="src\structs\Graphic.cpp" />
+    <ClCompile Include="src\structs\GraphicDependencyGroup.cpp" />
+    <ClCompile Include="src\structs\GraphicDependencyGroupEntry.cpp" />
+    <ClCompile Include="src\structs\GraphicIdentifier.cpp" />
+    <ClCompile Include="src\structs\GraphicSceneLayer.cpp" />
+    <ClCompile Include="src\structs\GridGraphicSceneLayer.cpp" />
+    <ClCompile Include="src\structs\IndexToAddressMap.cpp" />
+    <ClCompile Include="src\structs\InputEventData.cpp" />
+    <ClCompile Include="src\structs\KeyedAddressTableBuilder.cpp" />
+    <ClCompile Include="src\structs\KeyedTableBuilder.cpp" />
+    <ClCompile Include="src\structs\LayeredGraphicScene.cpp" />
+    <ClCompile Include="src\structs\LevelWidth.cpp" />
+    <ClCompile Include="src\structs\LoadHelper.cpp" />
+    <ClCompile Include="src\structs\PngConversion.cpp" />
+    <ClCompile Include="src\structs\RawFreeSpacePair.cpp" />
+    <ClCompile Include="src\structs\SaveHelper.cpp" />
+    <ClCompile Include="src\structs\Taddress.cpp" />
+    <ClCompile Include="src\structs\Tarray.cpp" />
+    <ClCompile Include="src\structs\Tbyte.cpp" />
+    <ClCompile Include="src\structs\Tcolor.cpp" />
+    <ClCompile Include="src\structs\Tmap.cpp" />
+    <ClCompile Include="src\structs\Tpair.cpp" />
+    <ClCompile Include="src\structs\TpointerArray.cpp" />
+    <ClCompile Include="src\structs\TpointerVector.cpp" />
+    <ClCompile Include="src\structs\TransModel.cpp" />
+    <ClCompile Include="src\structs\Tstring.cpp" />
+    <ClCompile Include="src\structs\Tvector.cpp" />
+    <ClCompile Include="src\structs\TwoDArray.cpp" />
+    <ClCompile Include="src\structs\TwoDByteArray.cpp" />
+    <ClCompile Include="src\structs\TwoKeyedAddress.cpp" />
+    <ClCompile Include="src\structs\TwoKeyedData.cpp" />
+    <ClCompile Include="src\structs\WrapScrollGraphic.cpp" />
+    <ClCompile Include="src\util\ArrayOps.cpp" />
+    <ClCompile Include="src\util\ByteConversion.cpp" />
+    <ClCompile Include="src\util\ByteSizes.cpp" />
+    <ClCompile Include="src\util\CoordinatePair.cpp" />
+    <ClCompile Include="src\util\DumbPointer.cpp" />
+    <ClCompile Include="src\util\EndiannessType.cpp" />
+    <ClCompile Include="src\util\FileManip.cpp" />
+    <ClCompile Include="src\util\GenericException.cpp" />
+    <ClCompile Include="src\util\IniFile.cpp" />
+    <ClCompile Include="src\util\MiscMath.cpp" />
+    <ClCompile Include="src\util\RLE8Command.cpp" />
+    <ClCompile Include="src\util\RLE8CommandCollection.cpp" />
+    <ClCompile Include="src\util\RLE8CommandType.cpp" />
+    <ClCompile Include="src\util\RLE8Compressor.cpp" />
+    <ClCompile Include="src\util\RLE8ValueCollection.cpp" />
+    <ClCompile Include="src\util\SignednessType.cpp" />
+    <ClCompile Include="src\util\StreamOps.cpp" />
+    <ClCompile Include="src\util\StringConversion.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

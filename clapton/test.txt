@@ -1,0 +1,36 @@
+// Comment
+         
+//$macro = "a macro";	// another comment
+ 
+//$macro3 = "$macro2 $macro";
+
+//$awer = "jim";
+
+$macro4 = "c5 6 d5 6 e5 6 f5 6 g5 6";
+
+$macro5 = "$macro4 c1 6 c2 6 c3 6 c4 6";
+
+//_SQ1 = -0x40;
+
+//_SQ1 = { a5 6 ^previous b5 6 r 6 c5 6 d5 6 };
+
+_SQ1 = { a5 6 b5 6 DUMMY95() c5 6 d5 6 e5 6 f5 6 g5 6 };
+
+_SQ1 = { $macro4 f5 6 g5 6 };
+
+_GENERICADDR = 0x8000;
+_SQ1ADDR = 0x8000;
+_SQ2ADDR = 0x8000;
+_TRIADDR = 0x8000;
+
+_SQ1 = { c5 6 d5 6 ^basepos f5 6 d5 6 e5 6 JUMP(^basepos) f5 6 g5 6 };
+
+_TRI = { d8 6 d9 6 c5 6 d2 6 };
+
+//_SQ1 = { ab5 6 g#5 6 c5 6 d5 6 e5 6 f5 6 g5 6 };
+
+//_SQ2 = { $macro4 $macro5 };
+
+//_TRI = { $macro4 $macro5 };
+
+//$macro4

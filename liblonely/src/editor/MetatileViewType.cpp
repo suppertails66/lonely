@@ -1,0 +1,7 @@
+namespace Lonely {
+
+
+// Blank
+
+
+};

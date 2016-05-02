@@ -1,0 +1,106 @@
+; Macros ($macro = "replacement text";) use pure character substitution and so are
+; not represented in the grammar outside of initial assignment. However, they are not
+; preprocessed, so a macro may only be used below the point where it is defined.
+
+SoundProgram:
+  EOF
+  Expressions EOF
+  
+Expressions:
+  Expression
+  Expression Expressions
+
+Expression:
+  Statement SEMICOLON
+  
+Statement:
+  Assignment
+  ControlTrigger
+
+Assignment:
+  MacroName EQUALS StringLiteral
+  BuiltInVariableName EQUALS SoundData
+  BuiltInVariableName EQUALS Number
+  
+MacroName:
+  DOLLAR_SIGN AlphNumCharacters
+  
+BuiltInVariableName:
+  UNDERSCORE AlphNumCharacters
+  
+SoundData:
+  OPEN_CURLYBRACE SoundCommands CLOSE_CURLYBRACE
+  
+SoundCommands:
+  SoundCommand
+  SoundCommand SoundCommands
+  
+SoundCommand:
+  Note
+  ControlTrigger
+  PositionLabel
+  
+Note:
+  NoteIdentifier NumberLiteral		; name, octave, duration
+  
+NoteIdentifier:
+  NoteName NumberLiteral	; name, octave
+
+NoteName:
+  NoteLetter
+  NoteLetter HASH	; sharp
+  NoteLetter PLUS
+  NoteLetter CHAR_B	; flat
+  NoteLetter CHAR_b
+  NoteLetter MINUS
+
+NoteLetter:
+  CHAR_A | CHAR_B | CHAR_C | CHAR_D | CHAR_E | CHAR_F | CHAR_G
+  | CHAR_a | CHAR_b | CHAR_c | CHAR_d | CHAR_e | CHAR_f | CHAR_g
+  | CHAR_R | CHAR_r	; rest
+  
+ControlTrigger:
+  BuiltInFunctionName OPEN_PAREN CLOSE_PAREN
+  BuiltInFunctionName OPEN_PAREN FunctionArgs CLOSE_PAREN
+  PIPE				; loop start
+  LESS_THAN NumberLiteral	; loop end
+  
+FunctionArgs:
+  NULL
+  FunctionArg
+  FunctionArg COMMA FunctionArgs
+
+FunctionArg:
+  NumberLiteral
+  PositionLabel
+
+PositionLabel:
+  CARAT AlphNumCharacters
+  
+StringLiteral:
+  QUOTE Characters QUOTE
+  
+Characters:
+  CHARACTER
+  CHARACTER Characters
+  
+AlphNumCharacters:
+  AlphNumCharacter
+  AlphNumCharacter AlphNumCharacters
+  
+AlphNumCharacter:
+  ALPH_CHARACTER
+  NUM_CHARACTER
+  
+Number:
+  NumberDigitSequence
+  MINUS NumberDigitSequence
+  PLUS NumberDigitSequence
+
+NumberDigitSequence
+  Digits
+  ZERO CHAR_X Digits	; hexadecimal
+  
+Digits:
+  DIGIT
+  DIGIT Digits

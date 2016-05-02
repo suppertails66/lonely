@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>LevelEditorWidget</class>
+ <widget class="QWidget" name="LevelEditorWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>513</width>
+    <height>331</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <widget class="QWidget" name="widget" native="true">
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Level</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="levelSelectBox"/>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="LayoutEditorWidget" name="levelEditorTab">
+      <attribute name="title">
+       <string>Layout</string>
+      </attribute>
+     </widget>
+     <widget class="PatternEditorWidget" name="patternEditorTab">
+      <attribute name="title">
+       <string>Patterns</string>
+      </attribute>
+     </widget>
+     <widget class="MetatileEditorWidget" name="metatileEditorTab">
+      <attribute name="title">
+       <string>Metatiles</string>
+      </attribute>
+     </widget>
+     <widget class="ObjectEditorWidget" name="objectEditorTab">
+      <attribute name="title">
+       <string>Objects</string>
+      </attribute>
+     </widget>
+     <widget class="PaletteEditorWidget" name="paletteEditorTab">
+      <attribute name="title">
+       <string>Palettes</string>
+      </attribute>
+     </widget>
+     <widget class="ResistanceEditorWidget" name="resistanceEditorTab">
+      <attribute name="title">
+       <string>Stats</string>
+      </attribute>
+     </widget>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>LayoutEditorWidget</class>
+   <extends>QWidget</extends>
+   <header>layouteditorwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>PatternEditorWidget</class>
+   <extends>QWidget</extends>
+   <header>patterneditorwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ObjectEditorWidget</class>
+   <extends>QWidget</extends>
+   <header>objecteditorwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MetatileEditorWidget</class>
+   <extends>QWidget</extends>
+   <header>metatileeditorwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>PaletteEditorWidget</class>
+   <extends>QWidget</extends>
+   <header>paletteeditorwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ResistanceEditorWidget</class>
+   <extends>QWidget</extends>
+   <header>resistanceeditorwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

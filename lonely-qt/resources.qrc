@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/lonely/icons">
+        <file>icon_clone.png</file>
+        <file>icon_move.png</file>
+        <file>icon_pencil.png</file>
+    </qresource>
+</RCC>

@@ -71,6 +71,9 @@ void LaylaData::exportToFile(const Tstring& romFileName) {
   // Create output ROM
   NesRom outrom(rom_);
   
+  // Do LTIM-specific pre-export modifications
+  ltimPreExportStep(outrom);
+  
   // Export metatiles before expanding ROM (since they go in the fixed bank,
   // which will be copied to the end of the ROM during expansion)
   staticMetatiles_.exportToRom(outrom);
@@ -86,6 +89,9 @@ void LaylaData::exportToFile(const Tstring& romFileName) {
   
   // Write graphics data
   graphics_.exportToRom(outrom);
+  
+  // Do LTIM-specific post-export modifications
+  ltimPostExportStep(outrom);
   
   // Write to file
   outrom.exportToFile(romFileName,
@@ -192,6 +198,14 @@ NesRom::NametableArrangementFlag
 NesRom::MapperType
     LaylaData::exportMapperNum() {
   return exportMapperNum_;
+}
+  
+void NesRom::ltimPreExportStep(NesRom& rom) {
+  
+}
+
+void NesRom::ltimPostExportStep(NesRom& rom) {
+  
 }
 
 

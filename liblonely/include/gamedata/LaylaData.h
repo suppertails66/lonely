@@ -59,6 +59,10 @@ protected:
       exportNametableFlag_ = NesRom::nametablesHorizontal;
   const static NesRom::MapperType
       exportMapperNum_ = NesRom::mapperUxRom;
+  
+  void ltimPreExportStep(NesRom& rom);
+  
+  void ltimPostExportStep(NesRom& rom);
 
   NesRom rom_;
 

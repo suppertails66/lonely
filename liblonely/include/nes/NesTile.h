@@ -41,6 +41,8 @@ public:
   void drawPalettized(Graphic& dst,
                       const NesPalette& src,
                       bool transparency = false) const;
+  
+  void swapColors(Tbyte first, Tbyte second);
 protected:
   const static int planeByteOffset_ = 8;
 

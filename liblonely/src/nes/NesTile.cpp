@@ -153,6 +153,19 @@ void NesTile::drawPalettized(Graphic& dst,
   
   drawPalettized(dst, 0, 0, src, transparency);
 }
+  
+void NesTile::swapColors(Tbyte first, Tbyte second) {
+  for (int j = 0; j < height; j++) {
+    for (int i = 0; i < width; i++) {
+      if (data(i, j) == first) {
+        setData(i, j, second);
+      }
+      else if (data(i, j) == second) {
+        setData(i, j, first);
+      }
+    }
+  }
+}
 
 
 };

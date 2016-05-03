@@ -10,6 +10,8 @@
 #include "structs/LoadHelper.h"
 #include "util/StringConversion.h"
 #include "util/ByteConversion.h"
+#include "util/FileManip.h"
+#include <fstream>
 #include <iostream>
 
 #include "structs/Graphic.h"
@@ -49,6 +51,8 @@ LaylaData::LaylaData(const Tstring& romFileName,
           targetLevel.objectCodeBlockBaseOffset(),
           targetLevel.objectCodeBlock()));
   }
+  
+  ltimPostImportStep();
 /*  for (int i = 0; i < 8; i++) {
     Graphic g(NesColorData::size * 16,
                16);
@@ -199,13 +203,55 @@ NesRom::MapperType
     LaylaData::exportMapperNum() {
   return exportMapperNum_;
 }
+      
+void LaylaData::ltimPostImportStep() {
+  // TEMP: Substitute Mario sprite/background tables for base
+  Tbyte* mariofile = readAndAllocateMarioFile("../mario.nes");
+  NesPatternTable bg = prepareMarioBg(mariofile);
+  NesPatternTable sprites = prepareMarioSprites(mariofile);
+  delete mariofile;
+  graphics_.baseBackground() = bg;
+  graphics_.baseSprites() = sprites;
   
-void NesRom::ltimPreExportStep(NesRom& rom) {
+  
+}
+  
+void LaylaData::ltimPreExportStep(NesRom& rom) {
   
 }
 
-void NesRom::ltimPostExportStep(NesRom& rom) {
+void LaylaData::ltimPostExportStep(NesRom& rom) {
+  // Write Mario sprite/background tables to new location
+  Tbyte* mariofile = readAndAllocateMarioFile("../mario.nes");
+  NesPatternTable bg = prepareMarioBg(mariofile);
+  NesPatternTable sprites = prepareMarioSprites(mariofile);
+  delete mariofile;
+  sprites.toUncompressedData(rom.directWrite(marioTablesExportDest_ + 0x0000));
+  bg.toUncompressedData(rom.directWrite(marioTablesExportDest_
+                            + 0x1000));
   
+  
+}
+  
+Tbyte* LaylaData::readAndAllocateMarioFile(const Tstring& filename) {
+  std::ifstream ifs("../mario.nes",
+                    std::ios_base::binary);
+  int filesize = FileManip::getFileSize(ifs);
+  Tbyte* mariofile = new Tbyte[filesize];
+  ifs.read((char*)mariofile, filesize);
+  return mariofile;
+}
+
+NesPatternTable LaylaData::prepareMarioBg(Tbyte* mariofile) {
+  NesPatternTable bg;
+  bg.fromUncompressedData(mariofile + marioBgOffset_);
+  return bg;
+}
+
+NesPatternTable LaylaData::prepareMarioSprites(Tbyte* mariofile) {
+  NesPatternTable sprites;
+  sprites.fromUncompressedData(mariofile + marioSpritesOffset_);
+  return sprites;
 }
 
 

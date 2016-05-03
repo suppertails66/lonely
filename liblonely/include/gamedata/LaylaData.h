@@ -59,10 +59,18 @@ protected:
       exportNametableFlag_ = NesRom::nametablesHorizontal;
   const static NesRom::MapperType
       exportMapperNum_ = NesRom::mapperUxRom;
-  
+      
+  // ******LTIM-SPECIFIC ADDITIONS*********
+  const static int marioBgOffset_ = 0x9000;
+  const static int marioSpritesOffset_ = 0x8000;
+  // Bank D = new graphics
+  const static int marioTablesExportDest_ = 0x34000;
+  void ltimPostImportStep();
   void ltimPreExportStep(NesRom& rom);
-  
   void ltimPostExportStep(NesRom& rom);
+  Tbyte* readAndAllocateMarioFile(const Tstring& filename);
+  NesPatternTable prepareMarioBg(Tbyte* mariofile);
+  NesPatternTable prepareMarioSprites(Tbyte* mariofile);
 
   NesRom rom_;
 

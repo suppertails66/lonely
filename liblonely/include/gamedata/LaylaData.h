@@ -61,10 +61,14 @@ protected:
       exportMapperNum_ = NesRom::mapperUxRom;
       
   // ******LTIM-SPECIFIC ADDITIONS*********
-  const static int marioBgOffset_ = 0x9000;
-  const static int marioSpritesOffset_ = 0x8000;
+  const static int marioBgOffset_ = 0x9010;
+  const static int marioSpritesOffset_ = 0x8010;
   // Bank D = new graphics
-  const static int marioTablesExportDest_ = 0x34000;
+  const static int marioTablesExportDest_ = 0x34010;
+  const static Tbyte* marioOverworldPalette;
+  const static Tbyte* marioUnderworldPalette;
+//  const static Tbyte* marioWaterPalette;
+  const static Tbyte* marioCastlePalette;
   void ltimPostImportStep();
   void ltimPreExportStep(NesRom& rom);
   void ltimPostExportStep(NesRom& rom);

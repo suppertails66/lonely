@@ -51,7 +51,16 @@ LaylaGraphics::LaylaGraphics(const NesRom& rom,
 }
 
 void LaylaGraphics::exportToRom(NesRom& rom) const {
-  // probably don't implement this at some point
+  caveSprites_.toUncompressedData(rom.directWrite(caveSpritesOffset_));
+  caveBackground_.toUncompressedData(rom.directWrite(caveBackgroundOffset_));
+  baseSprites_.toUncompressedData(rom.directWrite(baseSpritesOffset_));
+  baseBackground_.toUncompressedData(rom.directWrite(baseBackgroundOffset_));
+  bossSprites_.toUncompressedData(rom.directWrite(bossSpritesOffset_));
+  bossBackground_.toUncompressedData(rom.directWrite(bossBackgroundOffset_));
+  titleSprites_.toUncompressedData(
+      rom.directWrite(titleSpritesOffset_));
+  titleBackground_.toUncompressedData(
+      rom.directWrite(titleBackgroundOffset_));
 }
 
 int LaylaGraphics::save(Tstring& data) const {

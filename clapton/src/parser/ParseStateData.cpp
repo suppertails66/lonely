@@ -661,9 +661,10 @@ void ParseStateData::addPositionLabel(const std::string& name,
   
 void ParseStateData::addPositionLabelAtChannelPos(
                                   ParseConstants::Channel channel,
-                                  const std::string& name) {
+                                  const std::string& name,
+                                  int offset) {
   addPositionLabel(name,
-                   channelCurrentAddress(channel));
+                   channelCurrentAddress(channel) + offset);
 }
 
 bool ParseStateData::positionLabelExists(const std::string& name) const {

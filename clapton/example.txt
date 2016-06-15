@@ -73,7 +73,7 @@ $jump = c4 6 e4 6 ^jumpPosition g4 6 c4 6 JUMP(jumpPosition)
 ; Set register $4000 (sq) or $4008 (tri) (op 91)
 $setreg1 = c4 6 SETREG1(0x40) e4 6
 
-; Set register $4003 (sq) or $400B (tri) (op 92)
+; Set register $4003 (sq) or $400B AND $400F (tri) (op 92)
 $setreg2 = c4 6 SETREG2(0x40) e4 6
 
 ; Set register $4001 (sq only) (op 93)

@@ -218,14 +218,14 @@ void LaylaData::ltimPostImportStep() {
     marioOverworldPalette); */
   
   // Replace keycard sprite graphics with "?" item BG graphics
-  graphics_.bossSprites().tile(0xEE)
-    = graphics_.bossBackground().tile(0x38);
-  graphics_.bossSprites().tile(0xEF)
-    = graphics_.bossBackground().tile(0x39);
-  graphics_.bossSprites().tile(0xFE)
-    = graphics_.bossBackground().tile(0x48);
-  graphics_.bossSprites().tile(0xFF)
-    = graphics_.bossBackground().tile(0x49);
+//  graphics_.bossSprites().tile(0xEE)
+//    = graphics_.bossBackground().tile(0x38);
+//  graphics_.bossSprites().tile(0xEF)
+//    = graphics_.bossBackground().tile(0x39);
+//  graphics_.bossSprites().tile(0xFE)
+//    = graphics_.bossBackground().tile(0x48);
+//  graphics_.bossSprites().tile(0xFF)
+//    = graphics_.bossBackground().tile(0x49);
 }
   
 void LaylaData::ltimPreExportStep(NesRom& rom) {
@@ -234,15 +234,63 @@ void LaylaData::ltimPreExportStep(NesRom& rom) {
 
 void LaylaData::ltimPostExportStep(NesRom& rom) {
   // Write Mario sprite/background tables to new location
-  Tbyte* mariofile = readAndAllocateMarioFile("../mario.nes");
-  NesPatternTable bg = prepareMarioBg(mariofile);
-  NesPatternTable sprites = prepareMarioSprites(mariofile);
-  delete mariofile;
-  sprites.toUncompressedData(rom.directWrite(marioTablesExportDest_ + 0x0000));
-  bg.toUncompressedData(rom.directWrite(marioTablesExportDest_
-                            + 0x1000));
+//  Tbyte* mariofile = readAndAllocateMarioFile("../mario.nes");
+//  NesPatternTable bg = prepareMarioBg(mariofile);
+//  NesPatternTable sprites = prepareMarioSprites(mariofile);
+//  delete mariofile;
+//  sprites.toUncompressedData(rom.directWrite(marioTablesExportDest_ + 0x0000));
+//  bg.toUncompressedData(rom.directWrite(marioTablesExportDest_
+//                            + 0x1000));
+
+  // Disable cyclone
+  *(rom.directWrite(0x3EFFC)) = 0x60;
   
+  // Disable ammo penalty for falling in pit
+  *(rom.directWrite(0x3D3ED)) = 0x60;
   
+  // Disable speed penalty for falling in pit
+  *(rom.directWrite(0x3C1BF)) = 0xEA;
+  *(rom.directWrite(0x3C1C0)) = 0xEA;
+  *(rom.directWrite(0x3C1C1)) = 0xEA;
+  
+  // Disable pistol ammo penalty for replaying a level
+  *(rom.directWrite(0x3D3E3)) = 0x60;
+  
+  // Disable non-pistol ammo penalty for replaying a level
+  *(rom.directWrite(0x3D3CE)) = 0xEA;
+  *(rom.directWrite(0x3D3CF)) = 0xEA;
+  
+  // Disable speed penalty for replaying a level
+  *(rom.directWrite(0x3C0AA)) = 0xEA;
+  *(rom.directWrite(0x3C0AB)) = 0xEA;
+//  *(rom.directWrite(0x3C07F)) = 0xEA;
+//  *(rom.directWrite(0x3C080)) = 0xEA;
+//  *(rom.directWrite(0x3C081)) = 0xEA;
+//  *(rom.directWrite(0x3D3E9)) = 0xEA;
+//  *(rom.directWrite(0x3D3EA)) = 0xEA;
+//  *(rom.directWrite(0x3D3EB)) = 0xEA;
+  
+  // Disable health penalty for falling in pit
+  *(rom.directWrite(0x3C1B9)) = 0xEA;
+  *(rom.directWrite(0x3C1BA)) = 0xEA;
+  *(rom.directWrite(0x3C1BB)) = 0xEA;
+  
+  // Set starting speed
+  *(rom.directWrite(0x3C0A5)) = 0x58;
+  
+  // Pistol patch
+  // Starting "ammo": 4
+  *(rom.directWrite(0x3D3DF)) = 0x04;
+  // Refire rate when button held: 0x06 (default 0x10)
+  // (by comparison, machine gun is 0x04)
+  *(rom.directWrite(0x3D4A0)) = 0x06;
+  // Increase by 4 on pistol pickup (max 8)
+  // ...
+  
+  // Give axes higher x-velocity
+//  *(rom.directWrite(0x3D594)) = 0x03;
+  // and higher initial y-velocity
+  *(rom.directWrite(0x3D56F)) = 0xF8;
 }
   
 Tbyte* LaylaData::readAndAllocateMarioFile(const Tstring& filename) {

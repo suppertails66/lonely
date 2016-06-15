@@ -90,6 +90,9 @@ public:
 
   StandardEditingScene::Tool activeTool() const;
   void changeActiveTool(StandardEditingScene::Tool tool);
+  
+  bool ignoreMetatileZero() const;
+  void setIgnoreMetatileZero(bool ignoreMetatileZero__);
 protected:
   const static int objectsGraphicHeight_ = 32;
 

@@ -8,7 +8,8 @@ namespace Lonely {
 
 
 PositionLabelToken::PositionLabelToken()
-  : ParseToken() { };
+  : ParseToken(),
+    plus(false) { };
   
 
 ParseTokenTypes::ParseTokenType PositionLabelToken::type() const {
@@ -22,11 +23,17 @@ int PositionLabelToken::fromStringStep(std::string& str,
   ParseToken* token = NULL;
   
   // CARAT AlphNumCharacters
-  if (!(charAtPosIs(str, pos, '^'))) {
-    return -1;
+  if ((charAtPosIs(str, pos, '^'))) {
+    ++pos;
+  }
+  // PLUS AlphNumCharacters
+  // (hack: jump to 
+  else if ((charAtPosIs(str, pos, '+'))) {
+    ++pos;
+    plus = true;
   }
   else {
-    ++pos;
+    return -1;
   }
   
   advance(str, pos, lineNum);
@@ -49,7 +56,8 @@ void PositionLabelToken::doSoundDataAssignment(ParseStateData& parseStateData,
   parseStateData.addPositionLabelAtChannelPos(
       channel,
       dynamic_cast<AlphNumCharactersToken&>(*(subtokens_[0]))
-        .characters());
+        .characters(),
+      plus ? 3 : 0);
 }
   
 const std::string& PositionLabelToken::label() const {

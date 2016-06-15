@@ -25,6 +25,8 @@ protected:
                              int pos,
                              int& lineNum,
                              ParseStateData& parseStateData);
+  
+  bool plus;
 };
 
 

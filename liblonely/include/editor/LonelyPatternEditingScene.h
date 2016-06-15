@@ -33,11 +33,16 @@ public:
   void changeMetatiles(LonelyMetatileCache& metatiles__);
   
   void changeViewType(MetatileViewTypes::MetatileViewType viewType__);
+  
+  bool ignoreMetatileZero() const;
+  void setIgnoreMetatileZero(bool ignoreMetatileZero__);
 protected:
   LaylaPattern* pattern_;
   LonelyMetatileCache* metatiles_;
   
   MetatileViewTypes::MetatileViewType viewType_;
+  
+  bool ignoreMetatileZero_;
   
   Graphic& metatileGraphic(int index);
 };

@@ -331,6 +331,14 @@ StandardEditingScene::Tool LonelyPatternView::activeTool() const {
 void LonelyPatternView::changeActiveTool(StandardEditingScene::Tool tool) {
   patternEditingScene_.changeTool(tool);
 }
+  
+bool LonelyPatternView::ignoreMetatileZero() const {
+  return patternEditingScene_.ignoreMetatileZero();
+}
+
+void LonelyPatternView::setIgnoreMetatileZero(bool ignoreMetatileZero__) {
+  patternEditingScene_.setIgnoreMetatileZero(ignoreMetatileZero__);
+}
 
 
 }; 

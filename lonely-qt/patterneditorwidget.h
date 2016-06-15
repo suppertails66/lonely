@@ -64,6 +64,7 @@ private slots:
     void on_patternRemoveButton_clicked();
     void on_pencilButton_clicked(bool checked);
     void on_cloneButton_clicked(bool checked);
+    void on_ignoreMetatileZeroBox_clicked(bool checked);
 };
 
 #endif // PATTERNEDITORWIDGET_H

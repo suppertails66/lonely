@@ -95,6 +95,7 @@ void LaylaPatternDefinitionTable::writeToData(NesRom& dst,
                 < supplementaryDataLimit) {
       dstAddress = supplementaryBlockAddress;
       supplementaryBlockAddress += compressedSize;
+      supplementaryBlockLength -= compressedSize;
     }
     else {
       throw NotEnoughSpaceException(TALES_SRCANDLINE,

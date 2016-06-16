@@ -339,6 +339,15 @@ bool LonelyPatternView::ignoreMetatileZero() const {
 void LonelyPatternView::setIgnoreMetatileZero(bool ignoreMetatileZero__) {
   patternEditingScene_.setIgnoreMetatileZero(ignoreMetatileZero__);
 }
+  
+bool LonelyPatternView::inheritPreviousLayout() const {
+  return activePattern().inheritPreviousLayout();
+}
+
+void LonelyPatternView::setInheritPreviousLayout(
+          bool inheritPreviousLayout__) {
+  activePattern().setInheritPreviousLayout(inheritPreviousLayout__);
+}
 
 
 }; 

@@ -55,6 +55,9 @@ public:
   void fixAfterMetatileQuantityChange(
     int numMetatiles,
     int index);
+  
+	bool inheritPreviousLayout() const;
+	void setInheritPreviousLayout(bool inheritPreviousLayout__);
 protected:
 	typedef std::vector<Tbyte> PatternDataCollection;
 	
@@ -71,6 +74,14 @@ protected:
 	const static int maxRunLength = 255;
 	
 	PatternDataCollection patternData_;
+	
+	// Hacky way of imitating an optimization present in the original game:
+	// Sometimes, multiple entires in the pattern definition table will point
+	// to the same data. This allows the same pattern data to be recycled with
+	// a different object layout. If this bool is set, then when this pattern is
+	// exported, its data will be ignored but it will still get an index entry
+	// with the same address as the previous pattern.
+	bool inheritPreviousLayout_;
 };
 
 

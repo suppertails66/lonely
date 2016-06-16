@@ -93,6 +93,9 @@ public:
   
   bool ignoreMetatileZero() const;
   void setIgnoreMetatileZero(bool ignoreMetatileZero__);
+  
+  bool inheritPreviousLayout() const;
+  void setInheritPreviousLayout(bool inheritPreviousLayout__);
 protected:
   const static int objectsGraphicHeight_ = 32;
 

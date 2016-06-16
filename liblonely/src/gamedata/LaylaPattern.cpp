@@ -117,6 +117,9 @@ int LaylaPattern::save(Tstring& data) const {
   }
   byteCount += patternData_.size();
   
+  byteCount += SaveHelper::saveInt(data, (int)inheritPreviousLayout_,
+                                   ByteSizes::uint8Size);
+  
   return byteCount;
 }
 
@@ -130,6 +133,9 @@ int LaylaPattern::load(const Tbyte* data) {
     patternData_[i] = *(data + byteCount + i);
   }
   byteCount += patternData_.size();
+  
+  inheritPreviousLayout_ = LoadHelper::loadInt(data, byteCount,
+                              ByteSizes::uint8Size);
   
   return byteCount;
 }

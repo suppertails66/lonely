@@ -384,6 +384,13 @@
           </widget>
          </item>
          <item>
+          <widget class="QCheckBox" name="inheritPreviousPatternBox">
+           <property name="text">
+            <string>Recycle previous pattern layout</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QWidget" name="widget_3" native="true">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Maximum">

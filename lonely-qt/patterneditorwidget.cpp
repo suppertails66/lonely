@@ -145,6 +145,7 @@ void PatternEditorWidget::refreshBoxes() {
     ui->gridBox->setChecked(patternView_.gridEnabled());
     ui->widthBox->setValue(patternView_.activePatternWidth());
     ui->ignoreMetatileZeroBox->setChecked(patternView_.ignoreMetatileZero());
+    ui->inheritPreviousPatternBox->setChecked(patternView_.inheritPreviousLayout());
 
     switch (patternView_.viewType()) {
     case MetatileViewTypes::visual:
@@ -313,5 +314,11 @@ void PatternEditorWidget::on_cloneButton_clicked(bool checked)
 void PatternEditorWidget::on_ignoreMetatileZeroBox_clicked(bool checked)
 {
     patternView_.setIgnoreMetatileZero(checked);
+    refreshDisplay();
+}
+
+void PatternEditorWidget::on_inheritPreviousPatternBox_clicked(bool checked)
+{
+    patternView_.setInheritPreviousLayout(checked);
     refreshDisplay();
 }

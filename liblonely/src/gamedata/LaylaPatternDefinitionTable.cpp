@@ -105,15 +105,27 @@ void LaylaPatternDefinitionTable::writeToData(NesRom& dst,
     }
     
 //    std::cout << dstAddress << std::endl;
-      
-    // Write pattern data
-    std::memcpy(dst.directWrite(dstAddress),
-                exportData.data(),
-                compressedSize);
+
+    Taddress indexEntryAddress = UxRomBanking::directToBankedAddressMovable(
+                                dstAddress);
+    
+    if (patterns_[i].inheritPreviousLayout()) {
+      // Get previous entry
+      indexEntryAddress = ByteConversion::fromBytes(
+                              dst.directRead(indexAddress - 2),
+                              ByteSizes::uint16Size,
+                              EndiannessTypes::little,
+                              SignednessTypes::nosign);
+    }
+    else {
+      // Write pattern data
+      std::memcpy(dst.directWrite(dstAddress),
+                  exportData.data(),
+                  compressedSize);
+    }
     
     // Add to index
-    ByteConversion::toBytes(UxRomBanking::directToBankedAddressMovable(
-                                dstAddress),
+    ByteConversion::toBytes(indexEntryAddress,
                             dst.directWrite(indexAddress),
                             ByteSizes::uint16Size,
                             EndiannessTypes::little,

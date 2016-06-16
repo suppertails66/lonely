@@ -8,9 +8,11 @@
 namespace Lonely {
 
 
-LaylaPattern::LaylaPattern() { };
+LaylaPattern::LaylaPattern()
+  : inheritPreviousLayout_(false) { };
 	
-LaylaPattern::LaylaPattern(const Tbyte* src) {
+LaylaPattern::LaylaPattern(const Tbyte* src)
+  : inheritPreviousLayout_(false) {
 	readFromData(src);
 }
 
@@ -247,6 +249,14 @@ void LaylaPattern::fixAfterMetatileQuantityChange(
       }
     }
   }
+}
+  
+bool LaylaPattern::inheritPreviousLayout() const {
+  return inheritPreviousLayout_;
+}
+
+void LaylaPattern::setInheritPreviousLayout(bool inheritPreviousLayout__) {
+  inheritPreviousLayout_ = inheritPreviousLayout__;
 }
 
 

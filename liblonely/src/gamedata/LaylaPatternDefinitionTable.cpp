@@ -85,14 +85,14 @@ void LaylaPatternDefinitionTable::writeToData(NesRom& dst,
     Taddress dstAddress = 0;
     
     // Try to put pattern in main block
-    if (mainDataAddress + compressedSize < mainDataLimit) {
+    if (mainDataAddress + compressedSize <= mainDataLimit) {
       dstAddress = mainDataAddress;
       mainDataAddress += compressedSize;
     }
     // If pattern doesn't fit in main block, put in supplementary block
     // and update position of supplementary block
     else if (supplementaryBlockAddress + compressedSize
-                < supplementaryDataLimit) {
+                <= supplementaryDataLimit) {
       dstAddress = supplementaryBlockAddress;
       supplementaryBlockAddress += compressedSize;
       supplementaryBlockLength -= compressedSize;

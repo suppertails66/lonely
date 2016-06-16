@@ -84,8 +84,11 @@ void LaylaPatternDefinitionTable::writeToData(NesRom& dst,
     
     Taddress dstAddress = 0;
     
+    if (patterns_[i].inheritPreviousLayout()) {
+      // do nothing and don't throw
+    }
     // Try to put pattern in main block
-    if (mainDataAddress + compressedSize <= mainDataLimit) {
+    else if (mainDataAddress + compressedSize <= mainDataLimit) {
       dstAddress = mainDataAddress;
       mainDataAddress += compressedSize;
     }

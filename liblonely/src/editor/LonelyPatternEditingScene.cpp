@@ -33,9 +33,9 @@ void LonelyPatternEditingScene
   ::drawEditable(Graphic& dst,
                  int x, int y,
                  int editableIndex) {
-  if (ignoreMetatileZero_ && (editableIndex == 0)) {
-    return;
-  }
+//  if (ignoreMetatileZero_ && (editableIndex == 0)) {
+//    return;
+//  }
   
   dst.copy(metatileGraphic(editableIndex),
            Box(x, y, 0, 0),
@@ -50,9 +50,13 @@ int LonelyPatternEditingScene
 void LonelyPatternEditingScene
   ::overwriteEditableAt(int editableX, int editableY,
                                  int newIndex) {
-  if (ignoreMetatileZero_ && (newIndex == 0)) {
+  if (ignoreMetatileZero_
+      && (indexOfEditableAt(editableX, editableY) != 0)) {
     return;
   }
+//  if (ignoreMetatileZero_ && (editableIndex == 0)) {
+//    return;
+//  }
   
   pattern_->setMetatileID(editableX, editableY, newIndex);
 }

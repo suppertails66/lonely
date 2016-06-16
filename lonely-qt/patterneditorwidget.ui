@@ -447,7 +447,7 @@
                <item>
                 <widget class="QCheckBox" name="ignoreMetatileZeroBox">
                  <property name="text">
-                  <string>Ignore tile 0</string>
+                  <string>BG mode</string>
                  </property>
                  <property name="shortcut">
                   <string>C</string>

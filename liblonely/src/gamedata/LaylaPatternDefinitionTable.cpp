@@ -88,6 +88,7 @@ void LaylaPatternDefinitionTable::writeToData(NesRom& dst,
     if (mainDataAddress + compressedSize < mainDataLimit) {
       dstAddress = mainDataAddress;
       mainDataAddress += compressedSize;
+//      std::cout << "1: " << dstAddress << std::endl;
     }
     // If pattern doesn't fit in main block, put in supplementary block
     // and update position of supplementary block
@@ -96,6 +97,7 @@ void LaylaPatternDefinitionTable::writeToData(NesRom& dst,
       dstAddress = supplementaryBlockAddress;
       supplementaryBlockAddress += compressedSize;
       supplementaryBlockLength -= compressedSize;
+//      std::cout << "2: " << dstAddress << std::endl;
     }
     else {
       throw NotEnoughSpaceException(TALES_SRCANDLINE,

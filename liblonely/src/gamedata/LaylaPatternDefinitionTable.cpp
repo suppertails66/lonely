@@ -144,6 +144,10 @@ void LaylaPatternDefinitionTable::writeToData(NesRom& dst,
   std::cout << "\tPattern table main end: " << StringConversion::intToString(
                   mainDataAddress, StringConversion::baseHex)
             << std::endl;
+  std::cout << "\tPattern table remaining space: "
+            << StringConversion::intToString(
+                  mainDataLimit - mainDataAddress, StringConversion::baseHex)
+            << std::endl;
 }
   
 int LaylaPatternDefinitionTable::save(Tstring& data) const {

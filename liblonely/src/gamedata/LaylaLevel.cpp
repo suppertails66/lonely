@@ -264,7 +264,8 @@ void LaylaLevel::exportToRom(NesRom& rom,
     - freeSpaceBlockStart;
   std::cout << "\tObject code base address: "
             << StringConversion::intToString(
-                  objectCodeBlockBaseOffset_, StringConversion::baseHex)
+                  bankBaseDirect
+                + objectCodeBlockBaseOffset_, StringConversion::baseHex)
             << std::endl;
   std::cout << "\tFree space start: " << StringConversion::intToString(
                   freeSpaceBlockStart, StringConversion::baseHex)

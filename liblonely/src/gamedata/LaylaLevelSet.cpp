@@ -118,6 +118,7 @@ LaylaLevelSet::LaylaLevelSet(const NesRom& rom,
 void LaylaLevelSet::exportToRom(NesRom& rom,
                    const LaylaObjectSetCollection& objectSets) const {
   for (int i = 0; i < numLevels_; i++) {
+    std::cout << "Exporting level " << i << std::endl;
     levels_[i].exportToRom(rom,
                            i + exportBankOffset_,
                            0,

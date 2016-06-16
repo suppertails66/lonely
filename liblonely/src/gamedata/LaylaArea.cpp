@@ -298,6 +298,11 @@ void LaylaArea::writeToData(NesRom& dst,
     }
   }
   
+  std::cout << "\tLayout start address: " << StringConversion::intToString(
+                  mainBlockAddress, StringConversion::baseHex) << std::endl;
+  std::cout << "\tFinal write address: " << StringConversion::intToString(
+                  dataAddress, StringConversion::baseHex) << std::endl;
+  
   // Write address table
   AddressTableReader::writeAddressTable(dst.directWrite(indexAddress),
                                         resolvedAddresses);

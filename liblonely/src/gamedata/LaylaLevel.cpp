@@ -168,6 +168,9 @@ void LaylaLevel::exportToRom(NesRom& rom,
                                 bankNum,
                                 UxRomBanking::movableBankOffset);
   
+  std::cout << "\tBank base address: " << StringConversion::intToString(
+                  bankBaseDirect, StringConversion::baseHex) << std::endl;
+  
   // Common code block
   std::memcpy(rom.directWrite(bankBaseDirect
                                 + commonCodeBlockBaseOffset_),
@@ -247,6 +250,9 @@ void LaylaLevel::exportToRom(NesRom& rom,
   // Pattern definitions
   Taddress patternDefinitionTableAddress
     = bankBaseDirect + patternDefinitionTableBase_;
+  std::cout << "\tPattern table start: " << StringConversion::intToString(
+                  patternDefinitionTableAddress, StringConversion::baseHex)
+            << std::endl;
   Taddress freeSpaceBlockStart
     = bankBaseDirect
         + objectCodeBlockBaseOffset_
@@ -256,6 +262,12 @@ void LaylaLevel::exportToRom(NesRom& rom,
                                 bankNum + 1,
                                 UxRomBanking::movableBankOffset)
     - freeSpaceBlockStart;
+  std::cout << "\tFree space start: " << StringConversion::intToString(
+                  freeSpaceBlockStart, StringConversion::baseHex)
+            << std::endl;
+  std::cout << "\tFree space size: " << StringConversion::intToString(
+                  freeSpaceBlockSize, StringConversion::baseHex)
+            << std::endl;
   patternDefinitions_.writeToData(
           rom,
           patternDefinitionTableAddress,
@@ -263,6 +275,14 @@ void LaylaLevel::exportToRom(NesRom& rom,
             - patternDefinitionTableAddress,
           freeSpaceBlockStart,
           freeSpaceBlockSize);
+  std::cout << "\tFree space start after pattern export: "
+            << StringConversion::intToString(
+                  freeSpaceBlockStart, StringConversion::baseHex)
+            << std::endl;
+  std::cout << "\tFree space after pattern export: "
+            << StringConversion::intToString(
+                  freeSpaceBlockSize, StringConversion::baseHex)
+            << std::endl;
   
   // Level init table.
   // Since we expanded the ROM so only one level is in each bank,
@@ -289,6 +309,9 @@ void LaylaLevel::exportToRom(NesRom& rom,
 //    << " " << objectCodeBlock_.size() << std::endl;
   
   // Area data
+//  std::cout << "\tLevel layout start: " << StringConversion::intToString(
+//                  freeSpaceBlockStart, StringConversion::baseHex)
+//            << std::endl;
   areaData_.writeToData(rom,
                         freeSpaceBlockStart,
                         freeSpaceBlockSize);

@@ -1,5 +1,6 @@
 #include "gamedata/LaylaPatternDefinitionTable.h"
 #include "util/ByteConversion.h"
+#include "util/StringConversion.h"
 #include "nes/UxRomBanking.h"
 #include "exception/OutOfRangeIndexException.h"
 #include "exception/NotEnoughSpaceException.h"
@@ -139,6 +140,10 @@ void LaylaPatternDefinitionTable::writeToData(NesRom& dst,
     
 //    std::cout << dstAddress << std::endl;
   }
+  
+  std::cout << "\tPattern table main end: " << StringConversion::intToString(
+                  mainDataAddress, StringConversion::baseHex)
+            << std::endl;
 }
   
 int LaylaPatternDefinitionTable::save(Tstring& data) const {

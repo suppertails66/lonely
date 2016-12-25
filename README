@@ -10,6 +10,8 @@ This is a level editor for the Japan-only NES/Famicom game Layla. It's capable o
 
 This is a very niche application, and I mostly designed it for my own use. As a result, instead of outputting binary data for individual levels, it outputs entire ROMs at once. It also automatically expands the ROM to 256 kb and alters some code in order to circumvent the original game's limitations on level structure. In the unmodified game, levels are stored two to a bank, with patterns shared between them; Lonely's exported ROMs have one level per bank.
 
+Build instructions: Make sure you have gcc, Qt, and libpng. Run "make" in the liblonely folder (you should get a bazillion warnings), then build lonely-qt/lonely-qt.pro using Qt Creator. To use the program, you will need a Layla ROM.
+
 I'm omitting complete documentation of the program because I seriously doubt anyone else will ever need it and I'm inclined to spend my time more fruitfully (ha ha), but here's a quick overview of the most important stuff:
 
 ***Layout Editor***

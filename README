@@ -1,5 +1,38 @@
-This is a special branch of Lonely specifically designed to create the hack Layla: The Iris Missions. The only real changes are to LaylaData.h and LaylaData.cpp, which include special functions that produce various hardcoded alterations to the imported and exported ROM data.
+Lonely: level editor for Layla (NES)
 
-Note that to produce the "real" hack, a few changes were made directly to the ROM outside of the program, and thus won't be reflected in exported data without this special modified ROM:
-* The Layla/Iris headswap
-* The enhanced sound driver with support for a call/return mechanism
+This is a level editor for the Japan-only NES/Famicom game Layla. It's capable of altering reasonably comprehensive range of data, including:
+* Level patterns
+* Pattern layouts
+* Object layouts
+* Metatile definitions
+* Palettes
+* Object stats (HP and weapon vulnerabilities)
+
+This is a very niche application, and I mostly designed it for my own use. As a result, instead of outputting binary data for individual levels, it outputs entire ROMs at once. It also automatically expands the ROM to 256 kb and alters some code in order to circumvent the original game's limitations on level structure. In the unmodified game, levels are stored two to a bank, with patterns shared between them; Lonely's exported ROMs have one level per bank.
+
+I'm omitting complete documentation of the program because I seriously doubt anyone else will ever need it and I'm inclined to spend my time more fruitfully (ha ha), but here's a quick overview of the most important stuff:
+
+***Layout Editor***
+
+There are three tools:
+* Single-pattern insert/remove (shortcuts: Z key, clicking a pattern in the menu, right-clicking a pattern in the level display). In Insert mode (A key), this inserts new patterns into the level; in Overwrite mode (S key), it overwrites existing ones.
+* Multi-pattern copy (shortcuts: X key, Ctrl + click-and-drag on the level display). Functions similarly to the above, but for multiple patterns. If "Copy nodes" is enabled, the program will attempt to copy any control nodes in the selection, though this can be a bit buggy.
+* Multi-pattern move (shortcut: C, Shift + click-and-drag on the level display). After selecting a series of patterns in the level, double-click on the position to move them to.
+
+The Q, W, and E keys switch among Visual, Behavior, and Solidity displays.
+
+To edit control nodes, click a node in the node display and use the buttons to alter the data.
+
+Clicking an entry in the Spawn List moves the camera to that spawn. The Add button under the Spawn List adds a new "spawn package" consisting of the necessary nodes to create a basic spawn position.
+
+***Pattern Editor***
+
+There are two tools:
+* Pencil (shortcuts: right-click on a tile in the pattern display (dropper mode)). Draws single tiles into the pattern.
+* Clone (shortcuts: Ctrl + click-and-drag on the pattern display). Copies a selected area of the pattern.
+
+BG mode is a special mode used for creating backgrounds. When active, only areas set to metatile 0 will be altered by modifying operations. This means you can draw patterns with no background (only metatile 0) and fill them in later by copying from a single common background.
+
+***Palettes***
+
+Note that some palettes, e.g. the "Standard palette", are shared among all levels.

@@ -19,6 +19,8 @@ public:
   
   NesColor(Tbyte nativeValue__);
   
+  bool operator==(const NesColor& c) const;
+  
   static Tbyte maxNativeValue();
   
   Tbyte nativeValue() const;
@@ -41,6 +43,15 @@ protected:
 
   Tbyte nativeValue_;
   
+  
+};
+
+bool operator<(const NesColor& first, const NesColor& second);
+
+class NesColorHash {
+public:
+
+  int operator()(const NesColor& c) const;  
   
 };
 

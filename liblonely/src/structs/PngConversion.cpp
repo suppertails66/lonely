@@ -1,5 +1,8 @@
 #include "structs/PngConversion.h"
 #include "gamegear/GGPalette.h"
+#include "util/FileManip.h"
+#include "util/StringConversion.h"
+#include "exception/TGenericException.h"
 #include <cstdio>
 #include <cstring>
 #include <fstream>
@@ -92,6 +95,90 @@ bool PngConversion::graphicToRGBAPng(const std::string& filename,
     }
     pngwfree(png_ptr, info_ptr);
     return false;
+  }
+#else
+  return false;
+#endif
+}
+  
+bool PngConversion::RGBAPngToGraphic(const std::string& filename,
+                             Graphic& dst) {
+#ifdef TALES_ENABLE_LIBPNG
+  std::ifstream ifs(filename);
+  int filesize = FileManip::getFileSize(ifs);
+  
+/*  if (filesize <= 0) {
+    throw TGenericException(T_SRCANDLINE,
+                            "TPngConversion::RGBAPngToGraphic()",
+                            "PNG filesize <= 0: "
+                              + filename);
+  } */
+  
+  if (filesize <= 0) {
+    return false;
+  }
+  
+  png_structp png_ptr;
+  png_infop info_ptr;
+  if (!pngralloc(png_ptr, info_ptr, filename)) {
+    throw TGenericException(TALES_SRCANDLINE,
+                            "PngConversion::RGBAPngToGraphic()",
+                            "Could not allocate for PNG read: "
+                              + filename);
+  }
+  
+  try {
+  
+    int bit_depth = png_get_bit_depth(png_ptr, info_ptr);
+
+    if (bit_depth != 8) {
+      throw TGenericException(TALES_SRCANDLINE,
+                              "PngConversion::RGBAPngToGraphic()",
+                              "Unsupported PNG bit depth "
+                                + StringConversion::toString(bit_depth)
+                                + ": "
+                                + filename);
+    }
+    
+    // Retrieve image width and height
+//    png_read_update_info(png_ptr, info_ptr);
+    int w = png_get_image_width(png_ptr, info_ptr);
+    int h = png_get_image_height(png_ptr, info_ptr);
+    int rowbytes = png_get_rowbytes(png_ptr, info_ptr);
+    
+    dst.resize(w, h);
+
+//    std::cout << (int)(*(row_pointers[0])) << " " 
+//               << (int)(*(row_pointers[0] + 1)) << " " 
+//               << (int)(*(row_pointers[0] + 2)) << " " 
+//               << (int)(*(row_pointers[0] + 3)) << " " << std::endl;
+
+    // Copy the pixel data
+    png_bytepp row_pointers = png_get_rows(png_ptr, info_ptr);
+    for (int j = 0; j < h; j++) {
+      png_bytep p = row_pointers[j];
+      for (int i = 0; i < w; i++) {
+        dst.setPixel(i, j,
+//                     Tcolor(p[2], p[1], p[0], p[3]),
+                     Tcolor(p[0], p[1], p[2], p[3]),
+                     Graphic::transUpdate);
+        p += 4;
+      }
+    }
+  
+    // Clean up
+    pngrfree(png_ptr, info_ptr);
+    
+    return true;
+  }
+  catch (PngFailure&) {
+    // Clean up
+    pngrfree(png_ptr, info_ptr);
+    
+    throw TGenericException(TALES_SRCANDLINE,
+                            "PngConversion::RGBAPngToGraphic()",
+                            "Failed reading PNG: "
+                              + filename);
   }
 #else
   return false;

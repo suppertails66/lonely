@@ -9,6 +9,14 @@ NesColor::NesColor()
 NesColor::NesColor(Tbyte nativeValue__)
   : nativeValue_(clipNativeValue(nativeValue__)) { };
   
+bool NesColor::operator==(const NesColor& c) const {
+  if (nativeValue_ == c.nativeValue()) {
+    return true;
+  }
+  
+  return false;
+}
+  
 const int NesColor::numNativeColors() {
   return numNativeColors_;
 }
@@ -39,6 +47,18 @@ Tcolor NesColor::realColorBisquit() const {
   
 Tbyte NesColor::clipNativeValue(Tbyte value) {
   return (value & nativeColorMask_);
+}
+
+bool operator<(const NesColor& first, const NesColor& second) {
+  if (first.nativeValue() < second.nativeValue()) {
+    return true;
+  }
+  
+  return false;
+}
+
+int NesColorHash::operator()(const NesColor& c) const {
+  return c.nativeValue();
 }
   
 const Tcolor NesColor::nativeToRealColor_[numNativeColors_] =

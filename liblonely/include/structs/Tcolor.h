@@ -21,6 +21,8 @@ public:
    * Alpha value for full transparency.
    */
   const static int fullAlphaTransparency = 0x00;
+  
+  bool operator==(const Tcolor& c) const;
 
   /**
    * Default constructor.
@@ -121,6 +123,15 @@ protected:
   Tbyte b_;
   
 };
+
+class TcolorHash {
+public:
+
+  int operator()(const Tcolor& c) const;  
+  
+};
+
+bool operator<(const Tcolor& first, const Tcolor& second);
 
 
 };

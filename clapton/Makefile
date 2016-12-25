@@ -25,11 +25,11 @@ all: $(LIB)
 $(ODIR)/%.o: $(SRCDIR)/%.cpp
 	@mkdir -p $(dir $@)
 #	$(CXX) -MMD -MP -MF $(@:.o=.d) -o $@ $< $(CXXFLAGS)
-	$(CXX) -I../liblonely/include -L../liblonely -llonely -c -MMD -MP -MF $(@:.o=.d) -o $@ $< $(CXXFLAGS)
+	$(CXX) -I../liblonely/include -L../liblonely -llonely -lpng -c -MMD -MP -MF $(@:.o=.d) -o $@ $< $(CXXFLAGS)
 	
 
 $(LIB): $(OBJ)
-	$(CXX) $(BININ) -o$(BINOUT) $(OBJ) -I../liblonely/include -L../liblonely -llonely $(CXXFLAGS)
+	$(CXX) $(BININ) -o$(BINOUT) $(OBJ) -I../liblonely/include -L../liblonely -llonely -lpng $(CXXFLAGS)
 #	$(AR) rcs $@ $^
 	#doxygen Doxyfile
 

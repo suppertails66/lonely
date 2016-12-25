@@ -55,6 +55,32 @@ void Tcolor::setG(Tbyte g__) {
 void Tcolor::setB(Tbyte b__) {
   b_ = b__;
 }
+  
+bool Tcolor::operator==(const Tcolor& c) const {
+  if ((r_ == c.r())
+      && (g_ == c.g())
+      && (b_ == c.b())
+      && (a_ == c.a())) {
+    return true;
+  }
+  
+  return false;
+}
+
+bool operator<(const Tcolor& first, const Tcolor& second) {
+  if ((first.r() < second.r())
+      && (first.g() < second.g())
+      && (first.b() < second.b())
+      && (first.a() < second.a())) {
+    return true;
+  }
+  
+  return false;
+}
+
+int TcolorHash::operator()(const Tcolor& c) const {
+  return (c.r() + c.g() + c.b() + c.a());
+}
 
 
 };

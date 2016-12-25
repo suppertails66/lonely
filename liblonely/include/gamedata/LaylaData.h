@@ -3,6 +3,7 @@
 
 
 #include "structs/Tstring.h"
+#include "structs/Tcolor.h"
 #include "gamedata/LaylaOffsetFile.h"
 #include "gamedata/LaylaLevel.h"
 #include "gamedata/LaylaLevelSet.h"
@@ -14,6 +15,7 @@
 #include "gamedata/LaylaObjectSets.h"
 #include "gamedata/LaylaObjectSet.h"
 #include <vector>
+#include <unordered_map>
 
 namespace Lonely {
 
@@ -72,6 +74,16 @@ protected:
   void ltimPostImportStep();
   void ltimPreExportStep(NesRom& rom);
   void ltimPostExportStep(NesRom& rom);
+  bool tileIsBlank(const NesTile& tile);
+  void addTiles(std::vector<NesTile> tiles,
+                NesPatternTable& patterns,
+                int srcPos,
+                int srcLen,
+                int position);
+  NesTile graphicToTile(Graphic& src,
+                        const NesPaletteQuad& palettes,
+                        std::unordered_map<Tcolor, NesColor,
+                                             TcolorHash> colorMap);
   Tbyte* readAndAllocateMarioFile(const Tstring& filename);
   NesPatternTable prepareMarioBg(Tbyte* mariofile);
   NesPatternTable prepareMarioSprites(Tbyte* mariofile);
@@ -87,6 +99,8 @@ protected:
   LaylaStaticMetatiles staticMetatiles_;
   
   LaylaObjectSetCollection objectSets_;
+  
+  Tbyte titleBankOrig[UxRomBanking::sizeOfPrgBank];
   
 };
 

@@ -10,6 +10,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 QMAKE_CXXFLAGS += -std=gnu++11
 
+LIBS += -lpng
+
 TARGET = lonely
 TEMPLATE = app
 
@@ -65,7 +67,8 @@ SOURCES += main.cpp\
     aboutdialog.cpp \
     vulnerabilityeditorwidget.cpp \
     resistanceeditorwidget.cpp \
-    hpeditorwidget.cpp
+    hpeditorwidget.cpp \
+    errordialog.cpp
 
 HEADERS  += lonelymainwindow.h \
     qtformatconversion.h \
@@ -117,7 +120,8 @@ HEADERS  += lonelymainwindow.h \
     aboutdialog.h \
     vulnerabilityeditorwidget.h \
     resistanceeditorwidget.h \
-    hpeditorwidget.h
+    hpeditorwidget.h \
+    errordialog.h
 
 FORMS    += lonelymainwindow.ui \
     romselectdialog.ui \
@@ -147,7 +151,8 @@ FORMS    += lonelymainwindow.ui \
     aboutdialog.ui \
     vulnerabilityeditorwidget.ui \
     resistanceeditorwidget.ui \
-    hpeditorwidget.ui
+    hpeditorwidget.ui \
+    errordialog.ui
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../liblonely/release/ -lliblonely
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../liblonely/debug/ -lliblonely

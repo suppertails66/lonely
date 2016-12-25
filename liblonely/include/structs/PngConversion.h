@@ -29,6 +29,9 @@ public:
   static bool graphicToRGBAPng(const std::string& filename,
                                Graphic& src);
   
+  static bool RGBAPngToGraphic(const std::string& filename,
+                               Graphic& dst);
+  
   static bool twoDArrayToIndexedPngGG(const std::string& filename,
                                       TwoDByteArray& src,
                                       GGPalette palette,

@@ -253,10 +253,14 @@ void LaylaLevel::exportToRom(NesRom& rom,
   std::cout << "\tPattern table start: " << StringConversion::intToString(
                   patternDefinitionTableAddress, StringConversion::baseHex)
             << std::endl;
+//  Taddress freeSpaceBlockStart
+//    = bankBaseDirect
+//        + objectCodeBlockBaseOffset_
+//        + objectCodeBlock_.size();
   Taddress freeSpaceBlockStart
     = bankBaseDirect
-        + objectCodeBlockBaseOffset_
-        + objectCodeBlock_.size();
+              + objectSets[objectSetNum_].objectCodeBlockBaseOffset()
+              + objectSets[objectSetNum_].objectCodeBlock().size();
   int freeSpaceBlockSize =
     UxRomBanking::bankedToDirectAddressMovable(
                                 bankNum + 1,

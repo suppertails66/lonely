@@ -342,6 +342,9 @@
                <iconset resource="resources.qrc">
                 <normaloff>:/lonely/icons/icon_pencil.png</normaloff>:/lonely/icons/icon_pencil.png</iconset>
               </property>
+              <property name="shortcut">
+               <string>Z</string>
+              </property>
               <property name="checkable">
                <bool>true</bool>
               </property>
@@ -355,6 +358,9 @@
               <property name="icon">
                <iconset resource="resources.qrc">
                 <normaloff>:/lonely/icons/icon_clone.png</normaloff>:/lonely/icons/icon_clone.png</iconset>
+              </property>
+              <property name="shortcut">
+               <string>X</string>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -375,6 +381,13 @@
              </spacer>
             </item>
            </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="inheritPreviousPatternBox">
+           <property name="text">
+            <string>Recycle previous pattern layout</string>
+           </property>
           </widget>
          </item>
          <item>
@@ -416,12 +429,28 @@
                  <property name="text">
                   <string>Grid</string>
                  </property>
+                 <property name="shortcut">
+                  <string>V</string>
+                 </property>
                 </widget>
                </item>
                <item>
                 <widget class="QCheckBox" name="zoomTilesBox">
                  <property name="text">
                   <string>Big tiles</string>
+                 </property>
+                 <property name="shortcut">
+                  <string>B</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QCheckBox" name="ignoreMetatileZeroBox">
+                 <property name="text">
+                  <string>BG mode</string>
+                 </property>
+                 <property name="shortcut">
+                  <string>C</string>
                  </property>
                 </widget>
                </item>
@@ -436,6 +465,9 @@
                  <property name="text">
                   <string>Visual</string>
                  </property>
+                 <property name="shortcut">
+                  <string>Q</string>
+                 </property>
                 </widget>
                </item>
                <item>
@@ -443,12 +475,18 @@
                  <property name="text">
                   <string>Behavior</string>
                  </property>
+                 <property name="shortcut">
+                  <string>W</string>
+                 </property>
                 </widget>
                </item>
                <item>
                 <widget class="QRadioButton" name="solidityButton">
                  <property name="text">
                   <string>Solidity</string>
+                 </property>
+                 <property name="shortcut">
+                  <string>E</string>
                  </property>
                 </widget>
                </item>

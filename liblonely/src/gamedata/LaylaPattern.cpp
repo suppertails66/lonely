@@ -8,9 +8,11 @@
 namespace Lonely {
 
 
-LaylaPattern::LaylaPattern() { };
+LaylaPattern::LaylaPattern()
+  : inheritPreviousLayout_(false) { };
 	
-LaylaPattern::LaylaPattern(const Tbyte* src) {
+LaylaPattern::LaylaPattern(const Tbyte* src)
+  : inheritPreviousLayout_(false) {
 	readFromData(src);
 }
 
@@ -115,6 +117,9 @@ int LaylaPattern::save(Tstring& data) const {
   }
   byteCount += patternData_.size();
   
+  byteCount += SaveHelper::saveInt(data, (int)inheritPreviousLayout_,
+                                   ByteSizes::uint8Size);
+  
   return byteCount;
 }
 
@@ -128,6 +133,9 @@ int LaylaPattern::load(const Tbyte* data) {
     patternData_[i] = *(data + byteCount + i);
   }
   byteCount += patternData_.size();
+  
+  inheritPreviousLayout_ = LoadHelper::loadInt(data, byteCount,
+                              ByteSizes::uint8Size);
   
   return byteCount;
 }
@@ -247,6 +255,14 @@ void LaylaPattern::fixAfterMetatileQuantityChange(
       }
     }
   }
+}
+  
+bool LaylaPattern::inheritPreviousLayout() const {
+  return inheritPreviousLayout_;
+}
+
+void LaylaPattern::setInheritPreviousLayout(bool inheritPreviousLayout__) {
+  inheritPreviousLayout_ = inheritPreviousLayout__;
 }
 
 

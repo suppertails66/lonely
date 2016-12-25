@@ -255,13 +255,15 @@ void LonelyPatternView::setCurrentObjectPatternIndex(int newIndex) {
   
 int LonelyPatternView::insertNewPattern() {
   // Insert pattern entry in pattern definition table
-  level_->patternDefinitions().insertPattern(patternNum_);
+  level_->patternDefinitions().insertPattern(patternNum_ + 1);
   
   // Insert entry in pattern object index
-  level_->objectPatterns().insertPatternIntoIndex(patternNum_);
+  level_->objectPatterns().insertPatternIntoIndex(patternNum_ + 1);
   
   // Fix existing pattern references in area layout
-  level_->areaData().fixReferencesAfterNewPatternAdded(patternNum_);
+  level_->areaData().fixReferencesAfterNewPatternAdded(patternNum_ + 1);
+  
+  ++patternNum_;
   
   // Regenerate default area types table
   regenerateDefaultAreaTypes();
@@ -330,6 +332,23 @@ StandardEditingScene::Tool LonelyPatternView::activeTool() const {
 
 void LonelyPatternView::changeActiveTool(StandardEditingScene::Tool tool) {
   patternEditingScene_.changeTool(tool);
+}
+  
+bool LonelyPatternView::ignoreMetatileZero() const {
+  return patternEditingScene_.ignoreMetatileZero();
+}
+
+void LonelyPatternView::setIgnoreMetatileZero(bool ignoreMetatileZero__) {
+  patternEditingScene_.setIgnoreMetatileZero(ignoreMetatileZero__);
+}
+  
+bool LonelyPatternView::inheritPreviousLayout() const {
+  return activePattern().inheritPreviousLayout();
+}
+
+void LonelyPatternView::setInheritPreviousLayout(
+          bool inheritPreviousLayout__) {
+  activePattern().setInheritPreviousLayout(inheritPreviousLayout__);
 }
 
 

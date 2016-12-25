@@ -84,17 +84,21 @@ void LaylaPatternDefinitionTable::writeToData(NesRom& dst,
     
     Taddress dstAddress = 0;
     
+    if (patterns_[i].inheritPreviousLayout()) {
+      // do nothing and don't throw
+    }
     // Try to put pattern in main block
-    if (mainDataAddress + compressedSize < mainDataLimit) {
+    else if (mainDataAddress + compressedSize <= mainDataLimit) {
       dstAddress = mainDataAddress;
       mainDataAddress += compressedSize;
     }
     // If pattern doesn't fit in main block, put in supplementary block
     // and update position of supplementary block
     else if (supplementaryBlockAddress + compressedSize
-                < supplementaryDataLimit) {
+                <= supplementaryDataLimit) {
       dstAddress = supplementaryBlockAddress;
       supplementaryBlockAddress += compressedSize;
+      supplementaryBlockLength -= compressedSize;
     }
     else {
       throw NotEnoughSpaceException(TALES_SRCANDLINE,
@@ -104,15 +108,27 @@ void LaylaPatternDefinitionTable::writeToData(NesRom& dst,
     }
     
 //    std::cout << dstAddress << std::endl;
-      
-    // Write pattern data
-    std::memcpy(dst.directWrite(dstAddress),
-                exportData.data(),
-                compressedSize);
+
+    Taddress indexEntryAddress = UxRomBanking::directToBankedAddressMovable(
+                                dstAddress);
+    
+    if (patterns_[i].inheritPreviousLayout()) {
+      // Get previous entry
+      indexEntryAddress = ByteConversion::fromBytes(
+                              dst.directRead(indexAddress - 2),
+                              ByteSizes::uint16Size,
+                              EndiannessTypes::little,
+                              SignednessTypes::nosign);
+    }
+    else {
+      // Write pattern data
+      std::memcpy(dst.directWrite(dstAddress),
+                  exportData.data(),
+                  compressedSize);
+    }
     
     // Add to index
-    ByteConversion::toBytes(UxRomBanking::directToBankedAddressMovable(
-                                dstAddress),
+    ByteConversion::toBytes(indexEntryAddress,
                             dst.directWrite(indexAddress),
                             ByteSizes::uint16Size,
                             EndiannessTypes::little,

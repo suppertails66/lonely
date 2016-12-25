@@ -12,7 +12,8 @@ LonelyPatternEditingScene::LonelyPatternEditingScene()
                          LaylaMetatile::height),
     pattern_(NULL),
     metatiles_(NULL),
-    viewType_(MetatileViewTypes::visual) { };
+    viewType_(MetatileViewTypes::visual),
+    ignoreMetatileZero_(false) { };
 
 LonelyPatternEditingScene::LonelyPatternEditingScene(
                             LaylaPattern& pattern__,
@@ -32,6 +33,10 @@ void LonelyPatternEditingScene
   ::drawEditable(Graphic& dst,
                  int x, int y,
                  int editableIndex) {
+//  if (ignoreMetatileZero_ && (editableIndex == 0)) {
+//    return;
+//  }
+  
   dst.copy(metatileGraphic(editableIndex),
            Box(x, y, 0, 0),
            Graphic::noTransUpdate);
@@ -45,6 +50,14 @@ int LonelyPatternEditingScene
 void LonelyPatternEditingScene
   ::overwriteEditableAt(int editableX, int editableY,
                                  int newIndex) {
+  if (ignoreMetatileZero_
+      && (indexOfEditableAt(editableX, editableY) != 0)) {
+    return;
+  }
+//  if (ignoreMetatileZero_ && (editableIndex == 0)) {
+//    return;
+//  }
+  
   pattern_->setMetatileID(editableX, editableY, newIndex);
 }
   
@@ -65,6 +78,16 @@ void LonelyPatternEditingScene
 void LonelyPatternEditingScene
   ::changeViewType(MetatileViewTypes::MetatileViewType viewType__) {
   viewType_ = viewType__;
+}
+
+bool LonelyPatternEditingScene
+  ::ignoreMetatileZero() const {
+  return ignoreMetatileZero_;
+}
+  
+void LonelyPatternEditingScene
+  ::setIgnoreMetatileZero(bool ignoreMetatileZero__) {
+  ignoreMetatileZero_ = ignoreMetatileZero__;
 }
   
 Graphic& LonelyPatternEditingScene

@@ -65,7 +65,8 @@ SOURCES += main.cpp\
     aboutdialog.cpp \
     vulnerabilityeditorwidget.cpp \
     resistanceeditorwidget.cpp \
-    hpeditorwidget.cpp
+    hpeditorwidget.cpp \
+    errordialog.cpp
 
 HEADERS  += lonelymainwindow.h \
     qtformatconversion.h \
@@ -117,7 +118,8 @@ HEADERS  += lonelymainwindow.h \
     aboutdialog.h \
     vulnerabilityeditorwidget.h \
     resistanceeditorwidget.h \
-    hpeditorwidget.h
+    hpeditorwidget.h \
+    errordialog.h
 
 FORMS    += lonelymainwindow.ui \
     romselectdialog.ui \
@@ -147,7 +149,8 @@ FORMS    += lonelymainwindow.ui \
     aboutdialog.ui \
     vulnerabilityeditorwidget.ui \
     resistanceeditorwidget.ui \
-    hpeditorwidget.ui
+    hpeditorwidget.ui \
+    errordialog.ui
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../liblonely/release/ -lliblonely
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../liblonely/debug/ -lliblonely

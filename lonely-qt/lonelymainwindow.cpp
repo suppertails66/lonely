@@ -6,7 +6,9 @@
 #include <QFileDialog>
 #include "romselectdialog.h"
 #include "aboutdialog.h"
+#include "errordialog.h"
 #include "util/StringConversion.h"
+#include "exception/NotEnoughSpaceException.h"
 #include "lonelyglobals.h"
 #include <iostream>
 
@@ -117,6 +119,19 @@ void LonelyMainWindow::changeTool(LonelyWidgets::LonelyWidget widgetID) {
                 ui->toolStackedWidget->currentWidget())->refreshDisplay();
 }
 
+void LonelyMainWindow::exportToFile(const std::string& filename) {
+    try {
+        editor_.exportToFile(filename);
+    }
+    catch (NotEnoughSpaceException& e) {
+        ErrorDialog(std::string("Error: Not enough space to generate the ROM!\n"
+                                "Needed space: ")
+                    + StringConversion::toString(e.needed())
+                    + " bytes",
+                    this).exec();
+    }
+}
+
 void LonelyMainWindow::toolButtonClicked(int num, bool checked) {
     changeTool(static_cast<LonelyWidgets::LonelyWidget>(num));
 }
@@ -135,7 +150,7 @@ void LonelyMainWindow::on_actionExport_as_triggered()
         return;
     }
 
-    editor_.exportToFile(path.toStdString());
+    exportToFile(path.toStdString());
 }
 
 void LonelyMainWindow::on_actionSave_as_triggered()
@@ -187,7 +202,7 @@ void LonelyMainWindow::on_actionExport_ROM_triggered()
 {
     if (editor_.rememberExportLocation()
             && (editor_.lastExportLocation().size() > 0)) {
-        editor_.exportToFile(editor_.lastExportLocation());
+        exportToFile(editor_.lastExportLocation());
     }
     else {
         on_actionExport_as_triggered();

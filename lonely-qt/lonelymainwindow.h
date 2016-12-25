@@ -36,6 +36,8 @@ private:
 
     void changeTool(LonelyWidgets::LonelyWidget widgetID);
 
+    void exportToFile(const std::string& filename);
+
 private slots:
     void toolButtonClicked(int num, bool checked);
 

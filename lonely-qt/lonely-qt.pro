@@ -13,6 +13,8 @@ QMAKE_CXXFLAGS += -std=gnu++11
 TARGET = lonely
 TEMPLATE = app
 
+LIBS += -lpng
+
 
 SOURCES += main.cpp\
         lonelymainwindow.cpp \

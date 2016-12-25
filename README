@@ -1,0 +1,5 @@
+This is a special branch of Lonely specifically designed to create the hack Layla: The Iris Missions. The only real changes are to LaylaData.h and LaylaData.cpp, which include special functions that produce various hardcoded alterations to the imported and exported ROM data.
+
+Note that to produce the "real" hack, a few changes were made directly to the ROM outside of the program, and thus won't be reflected in exported data without this special modified ROM:
+* The Layla/Iris headswap
+* The enhanced sound driver with support for a call/return mechanism

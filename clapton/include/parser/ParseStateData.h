@@ -32,7 +32,8 @@ public:
                         Taddress value);
   
   void addPositionLabelAtChannelPos(ParseConstants::Channel channel,
-                                    const std::string& name);
+                                    const std::string& name,
+                                    int offset = 0);
   
   bool positionLabelExists(const std::string& name) const;
   

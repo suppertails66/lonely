@@ -1347,6 +1347,16 @@ void LaylaData::ltimPostExportStep(NesRom& rom) {
   //   85 4C          STA $4C         ; equip pistol
   //                                  ; (sometimes this doesn't work???)
   //   60             RTS
+  //
+  // alternately, in place of previous 2 lines:
+  // JMP XXXX
+  //
+  // ; reset boss count on death
+  // XXXX:
+  // A2 ??      LDX CurrentLevel  ; actually, this isn't stored anywhere??
+  // LDA NumBossesArray,X
+  // STA $0461
+  // RTS
   std::memcpy(rom.directWrite(0x3C1B0),
               "\xB0\x0B"
               "\x29\x7F"
@@ -1930,8 +1940,8 @@ void LaylaData::ltimPostExportStep(NesRom& rom) {
   // machine gun refire rate (default = 0x04)
   *(rom.directWrite(0x3D4DE)) = 0x06;
   
-  // display uncollected items using real icon
-  // ...
+  // flamethrower refire rate (default = 0x08)
+  *(rom.directWrite(0x3D559)) = 0x09;
   
   // don't use ammo
   std::memcpy(rom.directWrite(0x3D4E1),
@@ -1989,7 +1999,8 @@ void LaylaData::ltimPostExportStep(NesRom& rom) {
   *(rom.directWrite(0x3F64E)) = 0x01;
   
   // increase flamethrower range (orig: 0x22)
-  *(rom.directWrite(0x3D554)) = 0x2A;
+//  *(rom.directWrite(0x3D554)) = 0x2A;
+  *(rom.directWrite(0x3D554)) = 0x28;
   
   // "ASTEROID" -> "MISSION "
   // SELECT ASTEROID
@@ -2271,6 +2282,75 @@ void LaylaData::ltimPostExportStep(NesRom& rom) {
   std::memcpy(rom.directWrite(0x3E518),
               "\x00\x00\x00",
               3);
+              
+  // move weapon/ammo display to the right
+  // when switching with select
+  for (int i = 0; i < 9; i++) {
+    int addr = ((i + 3) * UxRomBanking::sizeOfPrgBank) + 0x04BD;
+    std::memcpy(rom.directWrite(addr),
+                "\x78",
+                1);
+    addr = ((i + 3) * UxRomBanking::sizeOfPrgBank) + 0x04D1;
+    std::memcpy(rom.directWrite(addr),
+                "\x98",
+                1);
+  }
+  // move initial pistol tilemap
+  std::memcpy(rom.directWrite(0x3E5AA),
+              "\x00\x00\xE2\xF2",
+              4);
+  std::memcpy(rom.directWrite(0x3E5CA),
+              "\x00\x00\xE3\xF3\x00\x00\x00",
+              7);
+  // when switching from weapon menu
+  std::memcpy(rom.directWrite(0x3E10A),
+              "\x2D",
+              1);
+  std::memcpy(rom.directWrite(0x3E110),
+              "\x2E",
+              1);
+  std::memcpy(rom.directWrite(0x3E116),
+              "\x4D",
+              1);
+  std::memcpy(rom.directWrite(0x3E11C),
+              "\x4E",
+              1);
+  // and move ammo display (or null) to right
+  std::memcpy(rom.directWrite(0x3E124),
+              "\x3A",
+              1);
+  
+  // allow food to be picked up while invincible
+  // CDC6:
+  // 20 AC CF JSR XXXX
+  // EA EA    NOP NOP
+  //
+  // XXXX:
+  // BD 00 05 LDA $0500,X     ; is this object food?
+  // C9 01    CMP #01
+  // D0 04    BNE notFood
+  // 
+  // BD 20 05 LDA $0520,X     ; food: don't check invulnerability
+  // 60       RTS
+  //
+  // notFood:
+  // BD 20 05 LDA $0520,X
+  // 05 70    ORA $0070       ; anything else: check invulnerability
+  // 60       RTS
+  std::memcpy(rom.directWrite(0x3CDC6),
+              "\x20\xAC\xCF"
+              "\xEA\xEA",
+              5);
+  std::memcpy(rom.directWrite(0x3CFAC),
+              "\xBD\x00\x05"
+              "\xC9\x01"
+              "\xD0\x04"
+              "\xBD\x20\x05"
+              "\x60"
+              "\xBD\x20\x05"
+              "\x05\x70"
+              "\x60",
+              17);
   
   // E0A1 = prep numbers for draw during pause
   // E0A1:
@@ -2503,6 +2583,16 @@ void LaylaData::ltimPostExportStep(NesRom& rom) {
   // A5 44    LDA $0044
   // 09 80    ORA #80
   // 85 44    STA $0044
+  //
+  // ; temporarily freeze
+  // A9 FF        LDA #FF
+  // 85 82        STA $0082      ; driver tempo = 255 ("freeze" sound)
+  // A2 80        LDX #80        ; # frames to delay
+  // start:
+  // A9 80        LDA #80        ; interrupt flags
+  // 20 F7 83     JSR 83F7       ; wait for interrupt
+  // CA           DEX
+  // D0 F8        BNE start
   // 
   // done:
   // ; make up work
@@ -2515,14 +2605,23 @@ void LaylaData::ltimPostExportStep(NesRom& rom) {
   std::memcpy(rom.directWrite(0x2FFD0),
               "\xAD\x61\x04"
               "\xC9\x97"
-              "\xD0\x06"
+              "\xD0\x14"
               "\xA5\x44"
               "\x09\x80"
               "\x85\x44"
+              
+              "\xA9\xFF"
+              "\x85\x82"
+              "\xA2\xA0"
+              "\xA9\x80"
+              "\x20\xF7\x83"
+              "\xCA"
+              "\xD0\xF8"
+              
               "\xA5\x49"
               "\x4A"
               "\x60",
-              17);
+              31);
   
   // alter title palettes
   *(rom.directWrite(0xA988 + 0x05)) = 0x0B;
@@ -2572,6 +2671,87 @@ void LaylaData::ltimPostExportStep(NesRom& rom) {
   std::memcpy(rom.directWrite(0x2F5F3),
               "\x2E",
               1);
+              
+  // screw with stuff when mission 9 boss spawns
+  // 2F4FA:
+  // 20 70 BF   JSR BF70
+  // 
+  // BF70:
+  // A9 02      LDA #02       ; tempo
+  // 85 82      STA $0082
+  // A9 29      LDA #29       ; master tone shift
+  // 85 8B      STA $008B
+  // A9 0A      LDA #0A       ; ch1 reg2
+  // 8D 8E 01   STA $018E
+  // A9 09      LDA #09       ; ch2 reg2
+  // 8D AE 01   STA $01AE
+  //
+  // ; iris y-position
+  // A5 21      LDA $0021     ; this might be the rng?
+  // 8D 7C 04   STA $047C
+  //
+  // ; shake screen
+  // A5 49      LDA $0049     ; frame limiter
+  // 4A         LSR
+  // 4A         LSR
+  // 90 04      BCC next
+  // A9 FF      LDA #FF
+  // B0 02      BCS next2
+  // next:
+  // A9 01      LDA #01
+  // next2:
+  // 85 19      STA $0019
+  //
+  // ; just for the hell of it, turn on scrolling once we've
+  // ; completely spawned
+  // BD 88 05   LDA $0588,X   ; zero until fully spawned
+  // F0 08      BEQ done
+  // A9 00      LDA #00       ; scrolling is enabled when zero
+  // 8D 5A 04   STA $045A
+  //
+  // BD 88 05   LDA $0588,X   ; make up work
+  // done:
+  // 60         RTS
+  std::memcpy(rom.directWrite(0x2F4FA),
+              "\x20\x70\xBF",
+              3);
+  std::memcpy(rom.directWrite(0x2FF70),
+//              "\xA9\x02"
+              "\xA5\x7E"
+              "\x29\x03"  // AND 03 (tempo)
+              "\x85\x82"
+              "\xE6\x82"  // INC $0082 (tempo)
+//              "\xA9\x29"
+              "\xA9\x18"
+              "\x85\x8B"
+//              "\xA9\x0A"
+              "\xA5\x7E"
+              "\x8D\x8E\x01"
+//              "\xA9\x09"
+              "\xA5\x21"
+              "\x8D\xAE\x01"
+              
+              "\xA5\x21"
+              "\x8D\x7C\x04"
+              
+//              "\xA5\x49"
+              "\xA5\x7E"
+              "\x4A"
+              "\x4A"
+              "\x4A"
+              "\x90\x04"
+              "\xA9\xFF"
+              "\xB0\x02"
+              "\xA9\x01"
+              "\x85\x19"
+              
+              "\xBD\x88\x05"
+              "\xF0\x08"
+              "\xA9\x00"
+              "\x8D\x5A\x04"
+              "\xBD\x88\x05"
+              "\x60",
+              56);
   
   // modify new ending to switch to bank 2 before restarting
   // 32AAA:
@@ -2771,9 +2951,12 @@ void LaylaData::ltimPostExportStep(NesRom& rom) {
 
     "\x0D" "LAYLA\xE2",
     "\x07" "THE IRIS MISSIONS\xE4",
-    "\x04" "VERSION 1 -- 20 DEC 2016\xE4",
+/*    "\x04" "VERSION 1 -- 20 DEC 2016\xE4",
     "\x04" "(HAPPY 30TH ANNIVERSARY,\xE2",
-    "\x0C" "LAYLA!)\xE8",
+    "\x0C" "LAYLA!)\xE8", */
+    "\x04" "VERSION 2 -- 1 JAN 2017\xE4",
+    "\x07" "(HAPPY NEW YEAR!)\xE2",
+    "\x0C" "\xE8",
 
     "\x06" "THANKS FOR PLAYING!\xE8",
 
@@ -3187,19 +3370,19 @@ void LaylaData::ltimPostExportStep(NesRom& rom) {
     "\x02" "\xE4",
     "\x03" "- SUPER SPECIAL CREDITS -\xF8",
     "\x07" "SPECIAL THANKS TO\xF0",
-      "\x02" "- NESDEV'S NES DOCS\xF0",
-      "\x02" "- BLUECHIP'S 6502 REFERENCE\xF0",
-      "\x02" "- EVERYONE OVER AT TCRF FOR\xE2",
-      "\x02" "DISTRACTING ME WHEN I SHOULD\xE2",
-      "\x02" "HAVE BEEN WORKING\xF0",
-      "\x02" "- THE WEBMASTER OF ASTERIA NO\xE2",
-      "\x02" "LAYLA. CHECK IT OUT!\xE4",
+      "\x01" "- NESDEV'S NES DOCS\xF0",
+      "\x01" "- BLUECHIP'S 6502 REFERENCE\xF0",
+      "\x01" "- EVERYONE OVER AT TCRF FOR\xE2",
+      "\x01" "DISTRACTING ME FROM THIS\xF0",
+      "\x01" "- THE WEBMASTER OF ASTERIA NO\xE2",
+      "\x01" "LAYLA. CHECK IT OUT!\xE4",
       "\x05" "LAYLAIRIS.WEB.FC2.COM\xF0",
-      "\x02" "- GAME CENTER CX, FOR BRING-\xE2",
-      "\x02" "ING THIS GAME TO MY ATTENTION\xF0",
-      "\x02" "- dB-SOFT, FOR MAKING IT IN\xE2",
-      "\x02" "THE FIRST PLACE\xF0",
-      "\x02" "- YOU!\xF2",
+      "\x01" "- GAME CENTER CX, FOR BRING-\xE2",
+      "\x01" "ING THIS GAME TO MY ATTENTION\xF0",
+      "\x01" "- dB-SOFT, FOR MAKING IT IN\xE2",
+      "\x01" "THE FIRST PLACE\xF0",
+      "\x01" "- ARSTANNECKBEARD, FOR TESTING\xF0",
+      "\x01" "- YOU!\xF2",
       "\x06" "THANKS FOR PLAYING!\xFE",
       "\x02" "\xE6",
       "\x0C" "THE END\xEF",
@@ -3349,7 +3532,6 @@ void LaylaData::ltimPostExportStep(NesRom& rom) {
     
     std::string("\x00\x00\x00\x00\x00\x00\x00\x00", 8),
     std::string("\x00\x00\x00\x00\x00\x00\x00\x00", 8),
-    std::string("\x00\x00\x00\x00\x00\x00\x00\x00", 8),
     
     std::string("\x00\x00\x00\x00\x00\x00\x00\x00", 8),
     std::string("\x00\x00\x00\x00\x00\x00\x00\x00", 8),
@@ -3361,11 +3543,15 @@ void LaylaData::ltimPostExportStep(NesRom& rom) {
     std::string("\x00\x00\x00\x00\x00\x00\x00\x00", 8),
     std::string("\x00\x00\x00\x00\x00\x00\x00\x00", 8),
     
+    std::string("\x00\x00\x00\x00\x00\x00\x00\x00", 8),
+    
     // YOU!
-    std::string("\x55\x55\x55\x55\x55\x55\x55\x55", 8),
+//    std::string("\x55\x55\x55\x55\x55\x55\x55\x55", 8),
+    std::string("\x00\x00\x00\x00\x00\x00\x00\x00", 8),
     
     // THANKS FOR PLAYING!
-    std::string("\x00\x00\x00\x00\x00\x00\x00\x00", 8),
+//    std::string("\x00\x00\x00\x00\x00\x00\x00\x00", 8),
+    std::string("\x55\x55\x55\x55\x55\x55\x55\x55", 8),
     
     // THE END
     std::string("\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF", 8),

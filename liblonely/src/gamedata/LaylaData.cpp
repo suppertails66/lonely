@@ -489,7 +489,371 @@ void LaylaData::ltimPostImportStep() {
   qMark.setData(2, 7, 1);
   graphics_.titleBackground().tile(0x2E) = qMark;
   
+  // make copy of old question mark power-up (for mission 9)
+/*  graphics_.baseBackground().tile(0x29)
+    = graphics_.baseBackground().tile(0x38);
+  graphics_.baseBackground().tile(0x96)
+    = graphics_.baseBackground().tile(0x48);
+  graphics_.baseBackground().tile(0x9B)
+    = graphics_.baseBackground().tile(0x39);
+  graphics_.baseBackground().tile(0xB1)
+    = graphics_.baseBackground().tile(0x49); */
+    
+  // the ROM is pre-hacked to include period, comma, etc. at D0-D3 --
+  // move them to different spaces
+  graphics_.baseBackground().tile(0x29)
+    = graphics_.baseBackground().tile(0xD0);
+  graphics_.baseBackground().tile(0x96)
+    = graphics_.baseBackground().tile(0xD1);
+  graphics_.baseBackground().tile(0x9B)
+    = graphics_.baseBackground().tile(0xD2);
+  graphics_.baseBackground().tile(0xB1)
+    = graphics_.baseBackground().tile(0xD3);
   
+    
+  // add heart graphics (replacing D0-D3)
+  for (int j = 0; j < qMark.height; j++) {
+    for (int i = 0; i < qMark.height; i++) {
+      qMark.setData(i, j, 0);
+    }
+  }
+  // upper-left
+  // Row 0
+  qMark.setData(1, 0, 1);
+  qMark.setData(2, 0, 1);
+  qMark.setData(3, 0, 1);
+  qMark.setData(4, 0, 1);
+  qMark.setData(5, 0, 1);
+  qMark.setData(6, 0, 1);
+  qMark.setData(7, 0, 1);
+  // Row 1
+  qMark.setData(0, 1, 2);
+  qMark.setData(1, 1, 2);
+  qMark.setData(2, 1, 2);
+  qMark.setData(3, 1, 2);
+  qMark.setData(4, 1, 2);
+  qMark.setData(5, 1, 2);
+  qMark.setData(6, 1, 2);
+  qMark.setData(7, 1, 2);
+  // Row 2
+  qMark.setData(0, 2, 2);
+  // Row 3
+  qMark.setData(0, 3, 2);
+  qMark.setData(4, 3, 1);
+  qMark.setData(5, 3, 1);
+  // Row 4
+  qMark.setData(0, 4, 2);
+  qMark.setData(3, 4, 1);
+  qMark.setData(4, 4, 3);
+  qMark.setData(5, 4, 3);
+  qMark.setData(6, 4, 1);
+  // Row 5
+  qMark.setData(0, 5, 2);
+  qMark.setData(2, 5, 1);
+  qMark.setData(3, 5, 3);
+  qMark.setData(4, 5, 1);
+  qMark.setData(5, 5, 1);
+  qMark.setData(6, 5, 3);
+  qMark.setData(7, 5, 1);
+  // Row 6
+  qMark.setData(0, 6, 2);
+  qMark.setData(2, 6, 1);
+  qMark.setData(3, 6, 3);
+  qMark.setData(4, 6, 1);
+  qMark.setData(5, 6, 3);
+  qMark.setData(6, 6, 3);
+  qMark.setData(7, 6, 3);
+  // Row 7
+  qMark.setData(0, 7, 2);
+  qMark.setData(2, 7, 1);
+  qMark.setData(3, 7, 3);
+  qMark.setData(4, 7, 3);
+  qMark.setData(5, 7, 3);
+  qMark.setData(6, 7, 3);
+  qMark.setData(7, 7, 3);
+  graphics_.caveBackground().tile(0xD0) = qMark;
+  graphics_.baseBackground().tile(0xD0) = qMark;
+  graphics_.bossBackground().tile(0xD0) = qMark;
+  
+  // upper-right
+  qMark.setData(0, 0, 1);
+  qMark.setData(1, 0, 1);
+  qMark.setData(2, 0, 1);
+  qMark.setData(3, 0, 1);
+  qMark.setData(4, 0, 1);
+  qMark.setData(5, 0, 1);
+  qMark.setData(6, 0, 1);
+  qMark.setData(7, 0, 0);
+  // 
+  qMark.setData(0, 1, 2);
+  qMark.setData(1, 1, 2);
+  qMark.setData(2, 1, 2);
+  qMark.setData(3, 1, 2);
+  qMark.setData(4, 1, 2);
+  qMark.setData(5, 1, 2);
+  qMark.setData(6, 1, 2);
+  qMark.setData(7, 1, 1);
+  // 
+  qMark.setData(0, 2, 0);
+  qMark.setData(1, 2, 0);
+  qMark.setData(2, 2, 0);
+  qMark.setData(3, 2, 0);
+  qMark.setData(4, 2, 0);
+  qMark.setData(5, 2, 0);
+  qMark.setData(6, 2, 2);
+  qMark.setData(7, 2, 1);
+  // 
+  qMark.setData(0, 3, 0);
+  qMark.setData(1, 3, 1);
+  qMark.setData(2, 3, 1);
+  qMark.setData(3, 3, 0);
+  qMark.setData(4, 3, 0);
+  qMark.setData(5, 3, 0);
+  qMark.setData(6, 3, 2);
+  qMark.setData(7, 3, 1);
+  // 
+  qMark.setData(0, 4, 1);
+  qMark.setData(1, 4, 3);
+  qMark.setData(2, 4, 3);
+  qMark.setData(3, 4, 1);
+  qMark.setData(4, 4, 0);
+  qMark.setData(5, 4, 0);
+  qMark.setData(6, 4, 2);
+  qMark.setData(7, 4, 1);
+  // 
+  qMark.setData(0, 5, 3);
+  qMark.setData(1, 5, 3);
+  qMark.setData(2, 5, 3);
+  qMark.setData(3, 5, 3);
+  qMark.setData(4, 5, 1);
+  qMark.setData(5, 5, 0);
+  qMark.setData(6, 5, 2);
+  qMark.setData(7, 5, 1);
+  // 
+  qMark.setData(0, 6, 3);
+  qMark.setData(1, 6, 3);
+  qMark.setData(2, 6, 3);
+  qMark.setData(3, 6, 3);
+  qMark.setData(4, 6, 1);
+  qMark.setData(5, 6, 0);
+  qMark.setData(6, 6, 2);
+  qMark.setData(7, 6, 1);
+  // 
+  qMark.setData(0, 7, 3);
+  qMark.setData(1, 7, 3);
+  qMark.setData(2, 7, 3);
+  qMark.setData(3, 7, 3);
+  qMark.setData(4, 7, 1);
+  qMark.setData(5, 7, 0);
+  qMark.setData(6, 7, 2);
+  qMark.setData(7, 7, 1);
+  graphics_.caveBackground().tile(0xD1) = qMark;
+  graphics_.baseBackground().tile(0xD1) = qMark;
+  graphics_.bossBackground().tile(0xD1) = qMark;
+  
+  // lower-left
+  qMark.setData(0, 0, 2);
+  qMark.setData(1, 0, 0);
+  qMark.setData(2, 0, 1);
+  qMark.setData(3, 0, 3);
+  qMark.setData(4, 0, 3);
+  qMark.setData(5, 0, 3);
+  qMark.setData(6, 0, 3);
+  qMark.setData(7, 0, 3);
+  // 
+  qMark.setData(0, 1, 2);
+  qMark.setData(1, 1, 0);
+  qMark.setData(2, 1, 0);
+  qMark.setData(3, 1, 1);
+  qMark.setData(4, 1, 3);
+  qMark.setData(5, 1, 3);
+  qMark.setData(6, 1, 3);
+  qMark.setData(7, 1, 3);
+  // 
+  qMark.setData(0, 2, 2);
+  qMark.setData(1, 2, 0);
+  qMark.setData(2, 2, 0);
+  qMark.setData(3, 2, 0);
+  qMark.setData(4, 2, 1);
+  qMark.setData(5, 2, 3);
+  qMark.setData(6, 2, 3);
+  qMark.setData(7, 2, 3);
+  // 
+  qMark.setData(0, 3, 2);
+  qMark.setData(1, 3, 0);
+  qMark.setData(2, 3, 0);
+  qMark.setData(3, 3, 0);
+  qMark.setData(4, 3, 0);
+  qMark.setData(5, 3, 1);
+  qMark.setData(6, 3, 3);
+  qMark.setData(7, 3, 3);
+  // 
+  qMark.setData(0, 4, 2);
+  qMark.setData(1, 4, 0);
+  qMark.setData(2, 4, 0);
+  qMark.setData(3, 4, 0);
+  qMark.setData(4, 4, 0);
+  qMark.setData(5, 4, 0);
+  qMark.setData(6, 4, 1);
+  qMark.setData(7, 4, 3);
+  // 
+  qMark.setData(0, 5, 2);
+  qMark.setData(1, 5, 0);
+  qMark.setData(2, 5, 0);
+  qMark.setData(3, 5, 0);
+  qMark.setData(4, 5, 0);
+  qMark.setData(5, 5, 0);
+  qMark.setData(6, 5, 0);
+  qMark.setData(7, 5, 1);
+  // 
+  qMark.setData(0, 6, 2);
+  qMark.setData(1, 6, 0);
+  qMark.setData(2, 6, 0);
+  qMark.setData(3, 6, 0);
+  qMark.setData(4, 6, 0);
+  qMark.setData(5, 6, 0);
+  qMark.setData(6, 6, 0);
+  qMark.setData(7, 6, 0);
+  // 
+  qMark.setData(0, 7, 0);
+  qMark.setData(1, 7, 2);
+  qMark.setData(2, 7, 2);
+  qMark.setData(3, 7, 2);
+  qMark.setData(4, 7, 2);
+  qMark.setData(5, 7, 2);
+  qMark.setData(6, 7, 2);
+  qMark.setData(7, 7, 2);
+  graphics_.caveBackground().tile(0xD2) = qMark;
+  graphics_.baseBackground().tile(0xD2) = qMark;
+  graphics_.bossBackground().tile(0xD2) = qMark;
+  
+  // lower-right
+  qMark.setData(0, 0, 3);
+  qMark.setData(1, 0, 3);
+  qMark.setData(2, 0, 3);
+  qMark.setData(3, 0, 3);
+  qMark.setData(4, 0, 1);
+  qMark.setData(5, 0, 0);
+  qMark.setData(6, 0, 2);
+  qMark.setData(7, 0, 1);
+  // 
+  qMark.setData(0, 1, 3);
+  qMark.setData(1, 1, 3);
+  qMark.setData(2, 1, 3);
+  qMark.setData(3, 1, 1);
+  qMark.setData(4, 1, 0);
+  qMark.setData(5, 1, 0);
+  qMark.setData(6, 1, 2);
+  qMark.setData(7, 1, 1);
+  // 
+  qMark.setData(0, 2, 3);
+  qMark.setData(1, 2, 3);
+  qMark.setData(2, 2, 1);
+  qMark.setData(3, 2, 0);
+  qMark.setData(4, 2, 0);
+  qMark.setData(5, 2, 0);
+  qMark.setData(6, 2, 2);
+  qMark.setData(7, 2, 1);
+  // 
+  qMark.setData(0, 3, 3);
+  qMark.setData(1, 3, 1);
+  qMark.setData(2, 3, 0);
+  qMark.setData(3, 3, 0);
+  qMark.setData(4, 3, 0);
+  qMark.setData(5, 3, 0);
+  qMark.setData(6, 3, 2);
+  qMark.setData(7, 3, 1);
+  // 
+  qMark.setData(0, 4, 1);
+  qMark.setData(1, 4, 0);
+  qMark.setData(2, 4, 0);
+  qMark.setData(3, 4, 0);
+  qMark.setData(4, 4, 0);
+  qMark.setData(5, 4, 0);
+  qMark.setData(6, 4, 2);
+  qMark.setData(7, 4, 1);
+  // 
+  qMark.setData(0, 5, 0);
+  qMark.setData(1, 5, 0);
+  qMark.setData(2, 5, 0);
+  qMark.setData(3, 5, 0);
+  qMark.setData(4, 5, 0);
+  qMark.setData(5, 5, 0);
+  qMark.setData(6, 5, 2);
+  qMark.setData(7, 5, 1);
+  // 
+  qMark.setData(0, 6, 0);
+  qMark.setData(1, 6, 0);
+  qMark.setData(2, 6, 0);
+  qMark.setData(3, 6, 0);
+  qMark.setData(4, 6, 0);
+  qMark.setData(5, 6, 0);
+  qMark.setData(6, 6, 2);
+  qMark.setData(7, 6, 1);
+  // 
+  qMark.setData(0, 7, 2);
+  qMark.setData(1, 7, 2);
+  qMark.setData(2, 7, 2);
+  qMark.setData(3, 7, 2);
+  qMark.setData(4, 7, 2);
+  qMark.setData(5, 7, 2);
+  qMark.setData(6, 7, 2);
+  qMark.setData(7, 7, 0);
+  graphics_.caveBackground().tile(0xD3) = qMark;
+  graphics_.baseBackground().tile(0xD3) = qMark;
+  graphics_.bossBackground().tile(0xD3) = qMark;
+    
+  // create grid tiles for mission 9
+  for (int j = 0; j < qMark.height; j++) {
+    for (int i = 0; i < qMark.height; i++) {
+      qMark.setData(i, j, 0);
+    }
+  }
+  qMark.setData(0, 0, 1);
+  qMark.setData(0, 1, 1);
+  qMark.setData(0, 2, 1);
+  qMark.setData(0, 3, 1);
+  qMark.setData(0, 4, 1);
+  qMark.setData(0, 5, 1);
+  qMark.setData(0, 6, 1);
+  qMark.setData(0, 7, 1);
+  graphics_.baseBackground().tile(0x90) = qMark;
+  for (int j = 0; j < qMark.height; j++) {
+    for (int i = 0; i < qMark.height; i++) {
+      qMark.setData(i, j, 0);
+    }
+  }
+  qMark.setData(0, 7, 1);
+  qMark.setData(1, 7, 1);
+  qMark.setData(2, 7, 1);
+  qMark.setData(3, 7, 1);
+  qMark.setData(4, 7, 1);
+  qMark.setData(5, 7, 1);
+  qMark.setData(6, 7, 1);
+  qMark.setData(7, 7, 1);
+  graphics_.baseBackground().tile(0x93) = qMark;
+  for (int j = 0; j < qMark.height; j++) {
+    for (int i = 0; i < qMark.height; i++) {
+      qMark.setData(i, j, 0);
+    }
+  }
+  qMark.setData(0, 0, 1);
+  qMark.setData(0, 1, 1);
+  qMark.setData(0, 2, 1);
+  qMark.setData(0, 3, 1);
+  qMark.setData(0, 4, 1);
+  qMark.setData(0, 5, 1);
+  qMark.setData(0, 6, 1);
+  qMark.setData(0, 7, 1);
+  qMark.setData(0, 7, 1);
+  qMark.setData(1, 7, 1);
+  qMark.setData(2, 7, 1);
+  qMark.setData(3, 7, 1);
+  qMark.setData(4, 7, 1);
+  qMark.setData(5, 7, 1);
+  qMark.setData(6, 7, 1);
+  qMark.setData(7, 7, 1);
+  graphics_.baseBackground().tile(0xC1) = qMark;
   
 //  0x7B
   
@@ -1694,6 +2058,86 @@ void LaylaData::ltimPostExportStep(NesRom& rom) {
   std::memcpy(rom.directWrite(0x3EBBE),
               "\xA9\x01",
               2);
+  
+  // change tilemap of "?" power-up to heart
+  std::memcpy(rom.directWrite(0x3E4E0),
+              "\xD0\xD1\xD2\xD3",
+              4);
+              
+  // don't draw special weapon on weapon select menu
+  std::memcpy(rom.directWrite(0x3E54C),
+              "\x00\x00",
+              2);
+  std::memcpy(rom.directWrite(0x3E56C),
+              "\x00\x00",
+              2);
+  // don't draw special weapon ammo count
+//  std::memcpy(rom.directWrite(0x3E092),
+//              "\x03",
+//              1);
+  std::memcpy(rom.directWrite(0x3E096),
+              "\x04",
+              1);
+  
+  // shorten the right end of the HUD box to account for the missing
+  // special weapon
+  // "connectors"
+  std::memcpy(rom.directWrite(0x3E187),
+              "\x58",
+              1);
+  std::memcpy(rom.directWrite(0x3E191),
+              "\xB8",
+              1);
+  // side frame 1 (not needed)
+//  std::memcpy(rom.directWrite(0x3E1AA),
+//              "\x78",
+//              1);
+  // shorten top and bottom frames
+  std::memcpy(rom.directWrite(0x3E196),
+              "\x17",
+              1);
+  // right side of frame
+  // for some reason this is initialized, then overwritten later
+  // when the menu is brought up; we only need to change the latter
+  std::memcpy(rom.directWrite(0x3E54C),
+              "\xC7",
+              1);
+  std::memcpy(rom.directWrite(0x3E553),
+              "\x00",
+              1);
+  std::memcpy(rom.directWrite(0x3E56C),
+              "\xC7",
+              1);
+  std::memcpy(rom.directWrite(0x3E573),
+              "\x00",
+              1);
+              
+  // on weapon select menu, lock screen farther to the left (to
+  // account for the missing special weapon)
+  // default values: 0x49 ("raw" scroll) and 0xF0 (right lock value)
+  // and 0x2A (cursor offset for screen lock?)
+  for (int i = 0; i < 9; i++) {
+    int addr = ((i + 3) * UxRomBanking::sizeOfPrgBank) + 0x0312;
+    std::memcpy(rom.directWrite(addr),
+                "\x3F",
+                1);
+    addr = ((i + 3) * UxRomBanking::sizeOfPrgBank) + 0x0320;
+    std::memcpy(rom.directWrite(addr),
+                "\xC8",
+                1);
+    addr = ((i + 3) * UxRomBanking::sizeOfPrgBank) + 0x0327;
+    std::memcpy(rom.directWrite(addr),
+                "\x20",
+                1);
+    
+    // and while we're at it: suppress the "A button changes
+    // cursor direction" thing, since it isn't used anymore
+    // (frees 2CD-2DA)
+    addr = ((i + 3) * UxRomBanking::sizeOfPrgBank) + 0x02CB;
+    std::memcpy(rom.directWrite(addr),
+                "\xD0\x11",
+                2);
+  }
               
   // don't draw number of keys collected
   // initialization
@@ -1707,6 +2151,126 @@ void LaylaData::ltimPostExportStep(NesRom& rom) {
                 "\xEA\xEA\xEA\xEA\xEA\xEA",
                 6);
   }
+  
+  // don't draw ammo count unless shield is equipped
+/*  E23A:
+  JSR E13F ; already present
+  
+  ; old routine to compute keys collected
+  E13F:
+  A5 4C     LDA $004C     ; get equipped weapon
+  C9 07     CMP #07       ; shield?
+  D0 08     BNE done      ; leave quantity as-is
+  
+  A9 00     LDA #00       ; quantity is null
+  85 5E     STA $005E
+  85 5E     STA $005F
+  85 5E     STA $0060
+  
+  done:
+  60        RTS */
+  std::memcpy(rom.directWrite(0x3E13F),
+              "\xA5\x4C"
+              "\xC9\x07"
+              "\xF0\x08"
+              "\xA9\x00"
+              "\x85\x5E"
+              "\x85\x5F"
+              "\x85\x60"
+              "\x60",
+              15);
+/*  E128:
+  20 35 D6  JSR D635
+  
+  ; old routine for firing special weapon
+  D635:
+  A5 4C     LDA $004C     ; get equipped weapon
+  C9 07     CMP #07       ; shield?
+  D0 0B     BNE done      ; leave quantity as-is
+  
+  A9 00     LDA #00       ; quantity is null
+  9D 13 04  STA $0413,X
+  9D 14 04  STA $0414,X
+  9D 15 04  STA $0415,X
+  
+  done:
+  60        RTS */
+  std::memcpy(rom.directWrite(0x3E128),
+              "\x20\x35\xD6",
+              3);
+  std::memcpy(rom.directWrite(0x3D635),
+              "\xA5\x4C"
+              "\xC9\x07"
+              "\xF0\x0B"
+              "\xA9\x00"
+              "\x9D\x13\x04"
+              "\x9D\x14\x04"
+              "\x9D\x15\x04"
+              "\x60",
+              18);
+  // E0A1:  ; drawing ammo quantities for pause menu
+  // 20 47 D6 JSR D647
+  //
+  // D647:
+  // 98       TYA         ; save weapon index
+  // 48       PHA
+  // B9 4D 00 LDA $004D,Y ; get ammo count
+  // 20 6A E2 JSR E26A    ; do decimal conversion
+  // 68       PLA         ; retrieve weapon index
+  // 20 37 D6 JSR D637    ; set displayed quantity to null if not shield
+  // 60       RTS
+  std::memcpy(rom.directWrite(0x3E0A1),
+              "\x20\x47\xD6",
+              3);
+  std::memcpy(rom.directWrite(0x3D647),
+              "\x98"
+              "\x48"
+              "\xB9\x4D\x00"
+              "\x20\x6A\xE2"
+              "\x68"
+              "\x20\x37\xD6"
+              "\x60",
+              13);
+  // ; if speed is 58, draw ? over skate icon on pause menu
+  // E06A:
+  // C9 58    CMP #58
+  // D0 07    BNE xx
+  // 20 97 CF JSR CF97
+  // EA EA EA EA    NOP NOP NOP NOP
+  // xx:
+  //
+  // CF97?:
+  // A9 38    LDA #38
+  // 8D 17 04 STA $0417
+  // A9 48    LDA #48
+  // 8D 18 04 STA $0418
+  // A9 39    LDA #39
+  // 8D 37 04 STA $0437
+  // A9 49    LDA #49
+  // 8D 38 04 STA $0438
+  // 60       RTS
+  //
+  std::memcpy(rom.directWrite(0x3E06A),
+              "\xC9\x58"
+              "\xD0\x07"
+              "\x20\x97\xCF"
+              "\xEA\xEA\xEA\xEA",
+              11);
+  std::memcpy(rom.directWrite(0x3CF97),
+              "\xA9\x38"
+              "\x8D\x17\x04"
+              "\xA9\x48"
+              "\x8D\x18\x04"
+              "\xA9\x39"
+              "\x8D\x37\x04"
+              "\xA9\x49"
+              "\x8D\x38\x04"
+              "\x60",
+              21);
+  // erase default "000" speed value from tilemap
+  std::memcpy(rom.directWrite(0x3E518),
+              "\x00\x00\x00",
+              3);
   
   // E0A1 = prep numbers for draw during pause
   // E0A1:

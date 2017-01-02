@@ -1,5 +1,25 @@
-This is a special branch of Lonely specifically designed to create the hack Layla: The Iris Missions. The only real changes are to LaylaData.h and LaylaData.cpp, which include special functions that produce various hardcoded alterations to the imported and exported ROM data.
+This is a special branch of Lonely specifically designed to create the hack Layla: The Iris Missions. The only real changes are to LaylaData.h and LaylaData.cpp, which include special functions that produce various hardcoded alterations to the imported and exported ROM data. The program also outputs some information about the locations of exported data, which probably ought to be part of the main branch but isn't.
 
-Note that to produce the "real" hack, a few changes were made directly to the ROM outside of the program, and thus won't be reflected in exported data without this special modified ROM:
-* The Layla/Iris headswap
-* The enhanced sound driver with support for a call/return mechanism
+*** How to Build LTIM ***
+
+First, you'll need a headered good dump of Layla, such as "Layla (J) [!].nes". Assume it's named "layla.nes".
+
+1. Apply the IPS patch "ltim_basepatch.ips" found in the root program directory to layla.nes. This will perform a few of the necessary graphics changes and add the enhancements to the sound driver.
+
+2. Build Lonely as normal. See the README from the master branch for details.
+
+3. Copy the files "title_border.png", "title_iris.png", and "title_logo.png" into the directory containing the program executable.
+
+4. In Lonely's configuration menu, select the patched layla.nes as the source ROM, and select the file "LaylaOffsets_10levels.txt" as the offset file.
+
+5. Open the project file "ltim.lon".
+
+6. Export the project. Name the ROM "ltim.nes".
+
+7. To patch in the new music, you'll need the Clapton sound scripting system. It should be available from wherever you got this. Download and compile it.
+
+8. Copy your newly built ltim.nes, as well as the existing file ltim.sh, to the folder containing the Clapton executable. Copy everything from the "examples" directory of Clapton to the same location.
+
+9. Run ltim.sh in the Clapton directory. If you're on Windows, you can probably work something out.
+
+10. ltim.nes should now be a complete Layla: The Iris Missions ROM.

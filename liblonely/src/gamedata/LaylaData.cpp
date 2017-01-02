@@ -1353,10 +1353,11 @@ void LaylaData::ltimPostExportStep(NesRom& rom) {
   //
   // ; reset boss count on death
   // XXXX:
-  // A2 ??      LDX CurrentLevel  ; actually, this isn't stored anywhere??
-  // LDA NumBossesArray,X
-  // STA $0461
-  // RTS
+  // 85 4C      STA $4C         ; equip pistol
+  // A6 7C      LDX CurrentLevel
+  // BD 4A F6   LDA NumBossesArray,X
+  // 8D 61 04   STA $0461
+  // 60         RTS
   std::memcpy(rom.directWrite(0x3C1B0),
               "\xB0\x0B"
               "\x29\x7F"
@@ -1367,9 +1368,17 @@ void LaylaData::ltimPostExportStep(NesRom& rom) {
   std::memcpy(rom.directWrite(0x3DFA6),
               "\xA9\x00"
               "\x85\x54"
-              "\x85\x4C"
-              "\x60",
+//              "\x85\x4C"
+//              "\x60",
+              "\x20\xD0\xD6",
               7);
+  std::memcpy(rom.directWrite(0x3D6D0),
+              "\x85\x4C"
+              "\xA6\x7C"
+              "\xBD\x4A\xF6"
+              "\x8D\x61\x04"
+              "\x60",
+              11);
   for (int i = 0; i < 9; i++) {
     int addr = ((i + 3) * UxRomBanking::sizeOfPrgBank) + 0x01C2;
     std::memcpy(rom.directWrite(addr),
@@ -1943,6 +1952,9 @@ void LaylaData::ltimPostExportStep(NesRom& rom) {
   // flamethrower refire rate (default = 0x08)
   *(rom.directWrite(0x3D559)) = 0x09;
   
+  // bazooka refire rate (default = 0x0C)
+  *(rom.directWrite(0x3D5BE)) = 0x0A;
+  
   // don't use ammo
   std::memcpy(rom.directWrite(0x3D4E1),
               "\xEA\xEA",
@@ -1966,6 +1978,14 @@ void LaylaData::ltimPostExportStep(NesRom& rom) {
   std::memcpy(rom.directWrite(0x3D5E9),
               "\xEA\xEA",
               2);
+              
+  // prevent hardcoded passwords from granting ? ammo
+  std::memcpy(rom.directWrite(0xA82B),
+              "\x00",
+              1);
+  std::memcpy(rom.directWrite(0xA962),
+              "\x00",
+              1);
   
   // give 255 ammo on weapon pickup
   std::memcpy(rom.directWrite(0x3EC0A),
@@ -1997,6 +2017,10 @@ void LaylaData::ltimPostExportStep(NesRom& rom) {
 
   // only 1 boss kill is needed to end level 5 instead of 3
   *(rom.directWrite(0x3F64E)) = 0x01;
+
+  // only 1 boss kill is needed to end level 8 instead of 3
+  // (it should be 2, but...)
+//  *(rom.directWrite(0x3F651)) = 0x01;
   
   // increase flamethrower range (orig: 0x22)
 //  *(rom.directWrite(0x3D554)) = 0x2A;
@@ -2027,7 +2051,7 @@ void LaylaData::ltimPostExportStep(NesRom& rom) {
   // bumps into it it will continually fire shots and rapidly drain her
   // health
   // this makes projectiles check for invincibility first
-  // DFAD:
+  // D6DD:
   //   48         PHA
   //   A5 70      LDA 0070
   //   D0 04      BNE done
@@ -2038,10 +2062,10 @@ void LaylaData::ltimPostExportStep(NesRom& rom) {
   //   60         RTS
   //
   // EDAD:
-  //   20 AD DF   JSR DFAD
+  //   20 DA D6   JSR DFAD
   //
   // no fucking room
-  std::memcpy(rom.directWrite(0x3D6D9),
+  std::memcpy(rom.directWrite(0x3D6DD),
               "\x48"
               "\xA5\x70"
               "\xD0\x04"
@@ -2051,7 +2075,7 @@ void LaylaData::ltimPostExportStep(NesRom& rom) {
               "\x60",
               11);
   std::memcpy(rom.directWrite(0x3EDAD),
-              "\x20\xD9\xD6",
+              "\x20\xDD\xD6",
               3);
   // CE7D
   // edad
@@ -2063,7 +2087,12 @@ void LaylaData::ltimPostExportStep(NesRom& rom) {
   } */
   
   // disable final boss invincibility
-  *(rom.directWrite(0x3D6D7)) = 0x10;
+  // frees D6D0-D6D9
+//  *(rom.directWrite(0x3D6D7)) = 0x10;
+  *(rom.directWrite(0x3D6CC)) = 0xA9;
+  *(rom.directWrite(0x3D6CD)) = 0x01;
+  *(rom.directWrite(0x3D6CE)) = 0xD0;
+  *(rom.directWrite(0x3D6CF)) = 0x18;
   
   // don't substitute "?" when a new power-up is found
   std::memcpy(rom.directWrite(0x3EBBE),
@@ -2674,9 +2703,9 @@ void LaylaData::ltimPostExportStep(NesRom& rom) {
               
   // screw with stuff when mission 9 boss spawns
   // 2F4FA:
-  // 20 70 BF   JSR BF70
+  // 20 48 BF   JSR BF48
   // 
-  // BF70:
+  // BF48:
   // A9 02      LDA #02       ; tempo
   // 85 82      STA $0082
   // A9 29      LDA #29       ; master tone shift
@@ -2709,13 +2738,18 @@ void LaylaData::ltimPostExportStep(NesRom& rom) {
   // A9 00      LDA #00       ; scrolling is enabled when zero
   // 8D 5A 04   STA $045A
   //
+  // ; bug: if boss spawn point is loaded at player spawn time,
+  // ; $0460 gets overwritten with 00, making the boss invincible
+  // ; workaround: force it to 01 in the update code
+  // 
+  //
   // BD 88 05   LDA $0588,X   ; make up work
   // done:
   // 60         RTS
   std::memcpy(rom.directWrite(0x2F4FA),
-              "\x20\x70\xBF",
+              "\x20\x48\xBF",
               3);
-  std::memcpy(rom.directWrite(0x2FF70),
+  std::memcpy(rom.directWrite(0x2FF48),
 //              "\xA9\x02"
               "\xA5\x7E"
               "\x29\x03"  // AND 03 (tempo)
@@ -2745,13 +2779,66 @@ void LaylaData::ltimPostExportStep(NesRom& rom) {
               "\xA9\x01"
               "\x85\x19"
               
+  // ; palettes
+  // A9 20      LDA #10
+  // 85 C1      STA $00C0
+  // A9 20      LDA #20
+  // 85 C1      STA $00C1
+  // A9 2D      LDA #2D
+  // 85 C2      STA $00C2
+  // 85 C7      STA $00C7
+  // A9 0F      LDA #0F
+  // 85 C5      STA $00C5
+  // A9 08      LDA #08
+  // 85 C6      STA $00C6
+  // A9 22      LDA #22
+  // 85 C9      STA $00C9
+  // A9 34      LDA #34
+  // 85 CA      STA $00CA
+  // A9 14      LDA #14
+  // 85 CB      STA $00CB
+  // A9 23      LDA #23
+  // 85 CD      STA $00CD
+  // A9 06      LDA #06
+  // 85 CB      STA $00CE
+              "\xA9\x10"
+              "\x85\xC0"
+              "\xA9\x20"
+              "\x85\xC1"
+              "\xA9\x2D"
+              "\x85\xC2"
+              "\x85\xC7"
+              "\xA9\x0F"
+              "\x85\xC5"
+              "\xA9\x08"
+              "\x85\xC6"
+              "\xA9\x22"
+              "\x85\xC9"
+              "\xA9\x34"
+              "\x85\xCA"
+              "\xA9\x14"
+              "\x85\xCB"
+              "\xA9\x23"
+              "\x85\xCD"
+              "\xA9\x06"
+              "\x85\xCE"
+              
               "\xBD\x88\x05"
               "\xF0\x08"
               "\xA9\x00"
               "\x8D\x5A\x04"
               "\xBD\x88\x05"
               "\x60",
-              56);
+              98);
+  
+  // swordtail's score entry is invalid in mission 9 since it wasn't
+  // intended for the original object set, so we need to set it to
+  // something
+  // might as well do the rest while we're at it 
+  // fuck scores
+  std::memcpy(rom.directWrite(0x2D407),
+              "\x10\x10\x10\x10\x10",
+              5);
   
   // modify new ending to switch to bank 2 before restarting
   // 32AAA:

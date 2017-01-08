@@ -125,6 +125,8 @@ public:
   bool moveNodeItemUp(int index);
   bool moveNodeItemDown(int index);
   
+  void exportLevelMap(const std::string& filename);
+  
 protected:
   typedef std::vector<int> DrawXCollection;
   typedef std::vector<int> AreaTypeCollection;

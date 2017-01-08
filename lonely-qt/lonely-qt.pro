@@ -15,7 +15,6 @@ TEMPLATE = app
 
 LIBS += -lpng
 
-
 SOURCES += main.cpp\
         lonelymainwindow.cpp \
     qtformatconversion.cpp \

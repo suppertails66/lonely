@@ -61,13 +61,13 @@ int LonelyTilePickerScene
 }
 
 void LonelyTilePickerScene
-  ::LonelyTilePickerScene::changeTiles(NesPatternTable& tiles__) {
+  ::changeTiles(NesPatternTable& tiles__) {
   tiles_ = &tiles__;
   totalSelectables_ = tiles_->numTiles;
 }
 
 void LonelyTilePickerScene
-  ::LonelyTilePickerScene::changePalette(NesPaletteQuad palette__) {
+  ::changePalette(NesPaletteQuad palette__) {
   palette_ = palette__;
 }
 

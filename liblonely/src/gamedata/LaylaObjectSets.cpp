@@ -82,7 +82,7 @@ const LaylaObjectSets::LonelyLaylaObjectSetMapping
     LonelyLaylaObjects::undefined,
     LonelyLaylaObjects::miichin,
     LonelyLaylaObjects::koan,
-    LonelyLaylaObjects::at3,
+    LonelyLaylaObjects::torso,
     LonelyLaylaObjects::usumiil,
     LonelyLaylaObjects::shiilance,
     LonelyLaylaObjects::none,

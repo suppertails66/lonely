@@ -89,7 +89,7 @@ void RomSelectDialog::on_offsetFileBrowseButton_clicked(bool checked)
 {
     QString path = QFileDialog::getOpenFileName(this, tr("Open offset file"),
                                                 tr(""),
-                                                tr("Text files (*.txt"));
+                                                tr("Text files (*.txt)"));
 
     if (path == "") {
         return;

@@ -203,3 +203,16 @@ void LonelyMainWindow::on_actionExit_triggered()
 {
     qApp->closeAllWindows();
 }
+
+void LonelyMainWindow::on_actionSave_map_triggered()
+{
+    QString path = QFileDialog::getSaveFileName(this, tr("Save level map"),
+                                                tr(""),
+                                                tr("PNG files (*.png)"));
+
+    if (path == "") {
+        return;
+    }
+
+    editor_.levelEditor().levelView().exportLevelMap(path.toStdString());
+}

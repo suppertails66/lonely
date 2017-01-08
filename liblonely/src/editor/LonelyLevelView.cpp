@@ -1,5 +1,6 @@
 #include "editor/LonelyLevelView.h"
 #include "gamedata/LonelyLaylaMappings.h"
+#include "structs/PngConversion.h"
 #include <algorithm>
 #include <cstdlib>
 #include <iostream>
@@ -1704,6 +1705,39 @@ bool LonelyLevelView::moveNodeItemDown(int index) {
   }
   
   return result;
+}
+  
+void LonelyLevelView::exportLevelMap(const std::string& filename) {
+  int oldCamX = camX_;
+  int oldCamY = camY_;
+  int oldCamW = camW_;
+  int oldCamH = camH_;
+  int oldZoom = zoom_;
+  
+/*  camX_ = 0;
+  camY_ = 0;
+  camW_ = levelNativeWidth();
+  camH_ = levelNativeHeight();
+  zoom_ = 1.00; */
+  seekCamX(0);
+  seekCamY(0);
+  camW_ = levelNativeWidth();
+  camH_ = levelNativeHeight();
+  zoom_ = 1.00;
+  
+  drawLevelView();
+  PngConversion::graphicToRGBAPng(filename,
+                      levelView());
+  
+//  camX_ = oldCamX;
+//  camY_ = oldCamY;
+  seekCamX(oldCamX);
+  seekCamY(oldCamY);
+  camW_ = oldCamW;
+  camH_ = oldCamH;
+  zoom_ = oldZoom;
+  
+  drawLevelView();
 }
 
 

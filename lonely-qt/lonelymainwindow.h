@@ -48,6 +48,7 @@ private slots:
     void on_actionExport_ROM_triggered();
     void on_actionAbout_triggered();
     void on_actionExit_triggered();
+    void on_actionSave_map_triggered();
 };
 
 #endif // LONELYMAINWINDOW_H

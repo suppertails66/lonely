@@ -69,7 +69,7 @@ Tstring LonelyLaylaObjects::nameOfObject(LonelyLaylaObject object) {
     return "Bilganof";
     break;
   case soudchil:
-    return "Soudchil";
+    return "Swordtail";
     break;
   case pogos:
     return "Pogos";
